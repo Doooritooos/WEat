@@ -1,9 +1,9 @@
 package edu.pitt.domain;
 
-import java.util.Hashtable;
 import edu.pitt.utilities.DbUtilities;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,7 +18,7 @@ public class Workspace {
 
     private int userID;
     private int groupID;
-    private Hashtable<String, Result> resutlList = new Hashtable<String, Result>();
+    private ArrayList<Result> resutlList = new ArrayList<Result>();
     
     public Workspace(int userID, int groupID)
     {
@@ -43,7 +43,7 @@ public class Workspace {
                 // Create Result  object here for each resultID
                 Result result = new Result(resultID, groupID);
                 // Add each account to customerList
-                resutlList.put(resultID, result);
+                resutlList.add(result);
             }
         } catch (SQLException e) {
             System.out.println("Cannot load group results.");
@@ -51,7 +51,7 @@ public class Workspace {
         }
     }//end of loadGroupResults
     
-    public Hashtable<String, Result> getReultList()
+    public ArrayList<Result> getReultList()
     {
         return this.resutlList;
     }
