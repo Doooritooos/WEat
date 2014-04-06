@@ -66,4 +66,10 @@ public class Comment {
         DbUtilities db = new DbUtilities();
         db.executeQuery(sql);
     }
+    
+    public String toString()
+    {
+        String  s = userID + "said: " + commentText + "\n";
+        return s;
+    } 
 }
