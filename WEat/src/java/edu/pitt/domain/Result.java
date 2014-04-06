@@ -21,17 +21,17 @@ public class Result {
      * Result constructor 1 : Retrieve data for provided resultID from MySQL
      * WEat.Result table; Use retrieved data to populate corresponding
      * properties of the Result object.
-     *
      * @param resultID
+     * @param groupID
      */
-    public Result(String yelpID, int groupID) {
+    public Result(String resultID, int groupID) {
         String sql = "SELECT * FROM WEat.Result  ";
-        sql += "WHERE yelpID = '" + yelpID + "' AND groupID = " + groupID;
+        sql += "WHERE yelpID = '" + resultID + "' AND groupID = " + groupID;
         DbUtilities db = new DbUtilities();
         try {
             ResultSet rs = db.getResultSet(sql);
             while (rs.next()) {
-                this.resultID = yelpID;
+                this.resultID = resultID;
                 this.groupID = groupID;
                 this.userIDList.add(Integer.parseInt(rs.getString("userID")));
             }
@@ -90,5 +90,32 @@ public class Result {
     {
         return this.userIDList;
     }
+    
+    public String getResultID()
+    {
+        return resultID;
+    }
 
+    public String userListToString()
+    {
+        StringBuffer s = new StringBuffer();
+        s.append(userIDList.get(0));
+        for(int i = 0; i < userIDList.size(); i ++)
+        {
+            s.append(", " + i);
+        }
+        return new String(s);
+    }
+    
+    public String commenListToString()
+    {
+        StringBuffer s = new StringBuffer();
+        s.append("Comments on " + resultID + "\n");
+        for(Comment c : commentList )
+        {
+            s.append(c.toString());
+        }
+        return new String(s);
+    }
+    
 }

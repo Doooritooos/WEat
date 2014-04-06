@@ -47,7 +47,7 @@ public class Comment {
      * @param resultID
      * @param userID
      * @param groupID
-     * @param yelpID
+     * @param commentText
      */
     public Comment(String resultID, int userID, int groupID, String commentText) {
         this.resultID = resultID;
