@@ -28,11 +28,10 @@
     //if Button addComment  is clicked
     if (request.getParameter("btnAddComment") != null && request.getParameter("txtComment") != null) {
             String txtComment = request.getParameter("txtComment");
-
             selectedResultID = request.getParameter("cboResult");
             //insert the new commnet into database WEat.Comment
             Comment newComment = new Comment(selectedResultID, userID, groupID, txtComment);
-            //update the commentList of the result
+            //update the commentList of the result by reloading from databse table  WEat.Comment 
             Result updateResult  = new Result(selectedResultID, groupID);
             myWorkspace.getReultList().put(selectedResultID, updateResult);
     }
