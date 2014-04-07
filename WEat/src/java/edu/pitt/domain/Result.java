@@ -26,7 +26,7 @@ public class Result {
      */
     public Result(String resultID, int groupID) {
         String sql = "SELECT * FROM WEat.Result  ";
-        sql += "WHERE yelpID = '" + resultID + "' AND groupID = " + groupID;
+        sql += "WHERE resultID = '" + resultID + "' AND groupID = " + groupID;
         DbUtilities db = new DbUtilities();
         try {
             ResultSet rs = db.getResultSet(sql);
