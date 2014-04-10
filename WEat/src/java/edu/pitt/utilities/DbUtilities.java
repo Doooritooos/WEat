@@ -122,7 +122,7 @@ public class DbUtilities {
             }
             Statement statement = conn.createStatement();
             statement.executeUpdate(sql); // execute query
-           
+
             return true;
         } catch (Exception e) {
         	e.printStackTrace(); // debug
