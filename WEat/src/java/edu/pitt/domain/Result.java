@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Result {
 
     private String resultID;
+    private String resultName;
     private int groupID;
     private ArrayList<Integer> userIDList;
     private ArrayList<Comment> commentList;
@@ -32,6 +33,7 @@ public class Result {
             ResultSet rs = db.getResultSet(sql);
             while (rs.next()) {
                 this.resultID = resultID;
+                this.resultName = resultName;
                 this.groupID = groupID;
                 this.userIDList.add(Integer.parseInt(rs.getString("userID")));
             }
@@ -40,7 +42,7 @@ public class Result {
             e.printStackTrace();
         }
 
-        loadCommnetList();
+        loadCommentList();
     }
 
     /**
@@ -50,12 +52,13 @@ public class Result {
      * @param groupID
      * @param resultID
      */
-    public static void addResult(int userID, int groupID, String resultID) {
+    public static void addResult(String resultName, int userID,  int groupID, String resultID) {
 
         String sql = "INSERT INTO WEat.Result ";
-        sql += "(userID,groupID,yelpID) ";
+        sql += "(resultName, userID,groupID,yelpID) ";
         sql += " VALUES ";
-        sql += "(" + userID + ", ";
+        sql += "('" + resultName + "', ";
+        sql += userID + ", ";
         sql += groupID + ", ";
         sql += "'" + resultID + "');";
 
@@ -66,7 +69,7 @@ public class Result {
     /**
      * load all comments for this result
      */
-    public void loadCommnetList() {
+    public void loadCommentList() {
         String sql = "SELECT * FROM  WEat.Comment ";
         sql += " WHERE groupID = " + this.groupID;
         sql += " AND resultID = '" + this.resultID + "' ; ";
@@ -95,6 +98,11 @@ public class Result {
     {
         return resultID;
     }
+    
+    public String getResultName()
+    {
+        return resultName;
+    }
 
     public String userListToString()
     {
@@ -110,7 +118,7 @@ public class Result {
     public String commenListToString()
     {
         StringBuffer s = new StringBuffer();
-        s.append("Comments on " + resultID + "\n");
+        s.append("Comments on " + resultName + "\n");
         for(Comment c : commentList )
         {
             s.append(c.toString());
