@@ -1,3 +1,10 @@
+<%-- 
+    Document   : workspace
+    Created on : 2014-3-20, 18:33:32
+    Author     : Liu
+--%>
+
+
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.Comparator"%>
 <%@page import="java.util.ArrayList"%>
@@ -6,13 +13,25 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
-    if (session.getAttribute("isValidUser") == null) {
-        response.sendRedirect("login.jsp?error=Unauthenticated user!");
-    }
 
     Workspace myWorkspace;
-    int userID = (Integer) session.getAttribute("userID");
-    int groupID = (Integer) session.getAttribute("groupID");
+    User  user = null; 
+    
+    //check if user is valid
+    if (session.getAttribute("currentSessionUser") == null ) {
+        response.sendRedirect("login.jsp?error=Invalid user!");
+    }
+    else
+    {
+         user = (User) session.getAttribute("currentSessionUser"); 
+         if(user.isValid() == false)
+         {
+              response.sendRedirect("login.jsp?error=Invalid user!");
+         }
+    }
+    int userID = user.getUserID();
+    Group group  = (Group) session.getAttribute("currentSearchGroup");
+    int groupID = (int) group.getGroupID();
     String defaultResultID = null;
     String selectedResultID = null;
 
@@ -27,13 +46,13 @@
 
     //if Button addComment  is clicked
     if (request.getParameter("btnAddComment") != null && request.getParameter("txtComment") != null) {
-            String txtComment = request.getParameter("txtComment");
-            selectedResultID = request.getParameter("cboResult");
-            //insert the new commnet into database WEat.Comment
-            Comment newComment = new Comment(selectedResultID, userID, groupID, txtComment);
-            //update the commentList of the result by reloading from databse table  WEat.Comment 
-            Result updateResult  = new Result(selectedResultID, groupID);
-            myWorkspace.getReultList().put(selectedResultID, updateResult);
+        String txtComment = request.getParameter("txtComment");
+        selectedResultID = request.getParameter("cboResult");
+        //insert the new commnet into database WEat.Comment
+        Comment newComment = new Comment(selectedResultID, userID, groupID, txtComment);
+        //update the commentList of the result by reloading from databse table  WEat.Comment 
+        Result updateResult = new Result(selectedResultID, groupID);
+        myWorkspace.getReultList().put(selectedResultID, updateResult);
     }
 
 %>

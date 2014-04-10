@@ -1,5 +1,6 @@
 package edu.pitt.domain;
 
+import edu.pitt.Login.User;
 import edu.pitt.utilities.DbUtilities;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -104,13 +105,25 @@ public class Result {
         return resultName;
     }
 
+    /**
+     * output username in the list
+     * @return 
+     */
     public String userListToString()
     {
         StringBuffer s = new StringBuffer();
-        s.append(userIDList.get(0));
+        User user;
+        int userID;
+        userID = userIDList.get(0);
+        // user = new findUser(userID);
+        // s.append(user.getUserName());
+        s.append(userID);
         for(int i = 0; i < userIDList.size(); i ++)
         {
-            s.append(", " + i);
+           // userID = userIDList.get(i);
+          // user = new findUser(userID);
+          // s.append("," + user.getUserName());
+            s.append(", " + userID);
         }
         return new String(s);
     }
