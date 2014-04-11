@@ -57,6 +57,7 @@ public class AddGroup extends HttpServlet {
 			int userID =Integer.parseInt(request.getParameter("userID"));
 			String groupname= request.getParameter("groupname");
                         Group newGroup = new Group(groupname, userID);
+                        
 			try{
                              if(newGroup!=null){ 
                                 System.out.println("You are successfully add group");
