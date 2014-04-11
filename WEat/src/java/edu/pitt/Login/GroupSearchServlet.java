@@ -6,6 +6,7 @@
 
 package edu.pitt.Login;
 
+import edu.pitt.domain.Group;
 import java.io.IOException;
 //import java.io.PrintWriter;
 import java.sql.SQLException;

@@ -1,6 +1,5 @@
 package edu.pitt.domain;
 
-import edu.pitt.Login.User;
 import edu.pitt.utilities.DbUtilities;
 import java.sql.ResultSet;
 import java.sql.SQLException;

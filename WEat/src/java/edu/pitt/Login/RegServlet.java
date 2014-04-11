@@ -5,6 +5,7 @@
  */
 package edu.pitt.Login;
 
+import edu.pitt.domain.User;
 import java.io.IOException;
 import java.sql.SQLException;
 
