@@ -7,6 +7,7 @@ package edu.pitt.Login;
 
 import edu.pitt.domain.User;
 import java.io.IOException;
+import java.io.PrintWriter;
 //import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -67,7 +68,10 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("currentSessionUser", backUser);
                 response.sendRedirect("group.jsp");
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> FETCH_HEAD
 //                RequestDispatcher rd = request.getRequestDispatcher("group.jsp");
 //                rd.forward(request, response);
 

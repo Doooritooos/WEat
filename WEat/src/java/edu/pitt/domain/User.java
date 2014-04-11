@@ -32,6 +32,32 @@ public class User {
 
     DbUtilities db = new DbUtilities();
     ResultSet rs;
+    
+     public User(int userID) {
+        this.userID = userID;
+        
+        String sql = "SELECT * FROM WEat.user WHERE userID = '"
+                + this.userID + "'";
+        try {
+            rs = db.getResultSet(sql);
+            boolean userExists = rs.next();
+
+            if (!userExists) {
+                System.out.println("Email/Password entered is Incorrect or User doesnot Exists.");
+                this.valid = false;
+            } else if (userExists) {
+                this.password = rs.getString("password");
+                this.username = rs.getString("username");
+                this.valid = true;
+            }
+        } catch (SQLException ex) {
+            // TODO Auto-generated catch block
+            System.out.println("Log In failed: An Exception has occurred! " + ex);
+        } finally {
+            db.closeDbConnection();
+        }
+
+    }
 
     public User(String email, String password) {
         this.email = email;

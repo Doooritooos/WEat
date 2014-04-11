@@ -15,23 +15,20 @@
 <%
 
     Workspace myWorkspace;
-    User  user = null; 
-    
+    User user = null;
+
     //check if user is valid
-    if (session.getAttribute("currentSessionUser") == null ) {
+    if (session.getAttribute("currentSessionUser") == null) {
         response.sendRedirect("login.jsp?error=Invalid user!");
-    }
-    else
-    {
-         user = (User) session.getAttribute("currentSessionUser"); 
-         if(user.isValid() == false)
-         {
-              response.sendRedirect("login.jsp?error=Invalid user!");
-         }
+    } else {
+        user = (User) session.getAttribute("currentSessionUser");
+        if (user.isValid() == false) {
+            response.sendRedirect("login.jsp?error=Invalid user!");
+        }
     }
     int userID = user.getUserID();
-    Group group  = (Group) session.getAttribute("currentSearchGroup");
-    int groupID = (int) group.getGroupID();
+    Group group = (Group) session.getAttribute("currentSearchGroup");
+    String groupID = (String) group.getGroupID();
     String defaultResultID = null;
     String selectedResultID = null;
 
@@ -106,5 +103,9 @@
         <input type="text" name="txtComment" id="txtComment" value=""/>
         <input type="submit" name="btnAddComment" id="btnAddComment" value = "Add"><br>
     </form>
+    <form name="search" action="search.jsp">   
+        <input type="submit" value="Back to Search">
+    </form>
+
 </body>
 </html>

@@ -47,10 +47,14 @@
             %>
             
             <form class="form-login" action="search.jsp" method ="POST">
+<<<<<<< HEAD
             <li class="list-group-item"><%=existGroup.getGroupID()%></li>
+=======
+            <li class="list-group-item"><%=existGroup.getGroupName()%></li>
+>>>>>>> FETCH_HEAD
             <input type="hidden" name="getGroupID" value="<%=existGroup.getGroupID()%>"/>
             <input type="hidden" name="getUserID" value="<%=currentUserID%>"/>
-            <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">Search</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit" href="search.jsp">Search</button>
             </form>
             
             <%

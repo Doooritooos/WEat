@@ -18,10 +18,10 @@ import java.util.Hashtable;
 public class Workspace {
 
     private int userID;
-    private int groupID;
+    private String groupID;
     private Hashtable<String, Result> resultList = new Hashtable<String, Result>();
     
-    public Workspace(int userID, int groupID)
+    public Workspace(int userID, String groupID)
     {
         userID = this.userID;
         groupID = this.groupID;
