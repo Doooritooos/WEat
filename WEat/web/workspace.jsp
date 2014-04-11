@@ -17,20 +17,23 @@
     Workspace myWorkspace;
     User user = null;
 
-    //check if user is valid
-    if (session.getAttribute("currentSessionUser") == null) {
-        response.sendRedirect("login.jsp?error=Invalid user!");
-    } else {
-        user = (User) session.getAttribute("currentSessionUser");
-        if (user.isValid() == false) {
-            response.sendRedirect("login.jsp?error=Invalid user!");
-        }
-    }
-    int userID = user.getUserID();
-    Group group = (Group) session.getAttribute("currentSearchGroup");
-    String groupID = (String) group.getGroupID();
+//    //check if user is valid
+//    if (session.getAttribute("currentSessionUser") == null) {
+//        response.sendRedirect("login.jsp?error=Invalid user!");
+//    } else {
+//        user = (User) session.getAttribute("currentSessionUser");
+//        if (user.isValid() == false) {
+//            response.sendRedirect("login.jsp?error=Invalid user!");
+//        }
+//    }
+//    int userID = user.getUserID();
+//    Group group = (Group) session.getAttribute("currentSearchGroup");
+//    String groupID = (String) group.getGroupID();
     String defaultResultID = null;
-    String selectedResultID = null;
+   String selectedResultID = null;
+    
+    int userID = 1;
+    String groupID = "77ID-8JIE";
 
     //chaching
     if (session.getAttribute("myWorkspace") == null) {
@@ -62,7 +65,15 @@
         <title>Workspace Page</title>
     </head>
     <body>
-        <%                ArrayList<Result> results = new ArrayList(myWorkspace.getReultList().values());
+        
+        <%  
+    
+            if(myWorkspace.getReultList().size() == 0)
+            {
+                response.sendRedirect("search.jsp");
+            }
+    
+            ArrayList<Result> results = new ArrayList(myWorkspace.getReultList().values());
 
             class resultComparator implements Comparator<Result> {
 
