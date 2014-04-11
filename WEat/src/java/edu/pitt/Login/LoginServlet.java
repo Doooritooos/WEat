@@ -7,6 +7,7 @@ package edu.pitt.Login;
 
 import edu.pitt.domain.User;
 import java.io.IOException;
+import java.io.PrintWriter;
 //import java.io.PrintWriter;
 import java.sql.SQLException;
 
@@ -47,7 +48,7 @@ public class LoginServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset-UTF-8");
-        //PrintWriter out= new PrintWriter("try.txt");
+       // PrintWriter out = response.getWriter();
 //		String hdnParam	=request.getParameter("pagename");
 //                if(hdnParam.equals("login")){
         try {
@@ -55,19 +56,26 @@ public class LoginServlet extends HttpServlet {
 
             String email = request.getParameter("email");
             String password = request.getParameter("password");
+//            out.println(email);
+//            out.println(password);
+            
             User backUser = new User(email, password);
+//            out.println(backUser);
+//            out.println(backUser.getUserID());
+//            out.println(backUser.getEmail());
 
             if (backUser.isValid()) {
                 HttpSession session = request.getSession(true);
+                
                 session.setAttribute("currentSessionUser", backUser);
-//                                        response.sendRedirect("loginSuccess.jsp");
+                response.sendRedirect("group.jsp");
 
-                RequestDispatcher rd = request.getRequestDispatcher("group.jsp");
-                rd.forward(request, response);
+
+//                RequestDispatcher rd = request.getRequestDispatcher("group.jsp");
+//                rd.forward(request, response);
 
             } else {
-                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-                rd.include(request, response);
+                response.sendRedirect("login.jsp");
             }
         } catch (Throwable exc) {
 
