@@ -12,6 +12,7 @@ package edu.pitt.domain;
 import edu.pitt.utilities.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.UUID;
 
 
@@ -109,4 +110,27 @@ public class Group {
         return valid;
     }
 
+    
+    public ArrayList<Group> getGroupList(int userID)
+    {
+        ArrayList<Group> groupList =new ArrayList<Group>();
+        String sql = "SELECT groupID FROM WEat.groups WHERE userID = '"
+                + this.userID + "'";
+        try {
+            rs = db.getResultSet(sql);
+           
+            while(rs.next())
+            {
+                Group group = new Group(userID, rs.getString("groupID"));
+                groupList.add(group);
+            
+            }
+        } catch (SQLException ex) {
+            // TODO Auto-generated catch block
+            System.out.println("An Exception has occurred! " + ex);
+        } finally {
+            db.closeDbConnection();
+        }
+        return groupList;
+    }
 }
