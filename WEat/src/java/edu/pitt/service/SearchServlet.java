@@ -1,4 +1,4 @@
-package edu.pitt.service;
+    package edu.pitt.service;
 
 import com.temboo.Library.Yelp.SearchByCategory;
 import com.temboo.Library.Yelp.SearchByCategory.SearchByCategoryInputSet;
@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author huanwang
  */
+@WebServlet(name = "SearchServlet", urlPatterns = {"/SearchServlet"})
 public class SearchServlet extends HttpServlet {
 
     /**

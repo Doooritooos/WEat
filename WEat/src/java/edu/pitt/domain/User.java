@@ -70,7 +70,7 @@ public class User {
             String sql = "INSERT INTO WEat.user(email, password, username)";
             sql += "VALUES ('" + this.email + "', '" + this.password + "', '"
                     + this.username + "')";
-            db.executeQuery(sql);
+            db.executeUpdate(sql);
         }
     }
 

@@ -54,7 +54,7 @@ public class RegServlet extends HttpServlet {
         try {
             if (newUser != null) {
                 System.out.println("You are successfully registered");
-                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
                 rd.forward(request, response);
             } else {
                 System.out.println("Error registered!");

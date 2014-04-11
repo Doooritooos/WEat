@@ -87,8 +87,8 @@ public class DbUtilities {
             return statement.executeQuery(sql); // Return ResultSet
         } catch (Exception e) {
         	e.printStackTrace(); // debug
-            ErrorLogger.log(e.getMessage()); // Log error
-            ErrorLogger.log(sql); // Log SELECT query
+//            ErrorLogger.log(e.getMessage()); // Log error
+//            ErrorLogger.log(sql); // Log SELECT query
         }
         return null;
     }
@@ -109,8 +109,8 @@ public class DbUtilities {
             return true;
         } catch (Exception e) {
         	e.printStackTrace(); // debug
-            ErrorLogger.log(e.getMessage()); // Log error
-            ErrorLogger.log(sql); // Log INSERT, UPDATE, DELETE query
+//            ErrorLogger.log(e.getMessage()); // Log error
+//            ErrorLogger.log(sql); // Log INSERT, UPDATE, DELETE query
         }
         return false;
     }
@@ -126,8 +126,8 @@ public class DbUtilities {
             return true;
         } catch (Exception e) {
         	e.printStackTrace(); // debug
-            ErrorLogger.log(e.getMessage()); // Log error
-            ErrorLogger.log(sql); // Log INSERT, UPDATE, DELETE query
+//            ErrorLogger.log(e.getMessage()); // Log error
+//            ErrorLogger.log(sql); // Log INSERT, UPDATE, DELETE query
         }
         return false;
     }
