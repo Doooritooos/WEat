@@ -9,14 +9,16 @@ package edu.pitt.domain;
  *
  * @author Doris
  */
+import edu.pitt.utilities.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import edu.pitt.utilities.*;
+import java.util.UUID;
+
 
 public class Group {
 
     private int userID;
-    private int groupID;
+    private String groupID;
     private String groupname;
     public boolean valid;
 
@@ -26,7 +28,7 @@ public class Group {
     public Group(int userID) {
         this.userID = userID;
 
-        String sql = "SELECT * FROM WEat.group WHERE userID = '"
+        String sql = "SELECT * FROM WEat.groups WHERE userID = '"
                 + this.userID + "'";
         try {
             rs = db.getResultSet(sql);
@@ -36,7 +38,7 @@ public class Group {
                 System.out.println("This group doesnot Exists.");
                 this.valid = false;
             } else if (groupExists) {
-                this.groupID = rs.getInt("groupID");
+                this.groupID = rs.getString("groupID");
                 this.groupname = rs.getString("groupname");
                 this.valid = true;
             }
@@ -49,11 +51,11 @@ public class Group {
 
     }
 
-    public Group(int userID, int groupID) {
+    public Group(int userID, String groupID) {
         this.userID = userID;
         this.groupID = groupID;
 
-        String sql = "SELECT * FROM WEat.group WHERE userID = '"
+        String sql = "SELECT * FROM WEat.groups WHERE userID = '"
                 + this.userID + "' AND groupID= '"
                 + this.groupID + "'";
         try {
@@ -77,12 +79,13 @@ public class Group {
     }
 
     public Group(String groupname, int userID) {
+        this.groupID =UUID.randomUUID().toString();
         this.groupname = groupname;
         this.userID = userID;
 
         if (this.groupname != null) {
-            String sql = "INSERT INTO WEat.group(userID, groupname)";
-            sql += "VALUES ('" + this.userID + "', '" + this.groupname + "')";
+            String sql = "INSERT INTO WEat.groups(userID, groupname, groupID)";
+            sql += "VALUES ('" + this.userID + "', '" + this.groupname + "','"+this.groupID+"')";
             db.executeQuery(sql);
         }
     }
@@ -91,7 +94,7 @@ public class Group {
         return groupname;
     }
 
-    public int getGroupID() {
+    public String getGroupID() {
         return groupID;
     }
 

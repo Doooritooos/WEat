@@ -55,17 +55,15 @@ public class AddGroup extends HttpServlet {
 //                if(hdnParam.equals("login")){
 			int userID =Integer.parseInt(request.getParameter("userID"));
 			String groupname= request.getParameter("groupname");
-		
                         Group newGroup = new Group(groupname, userID);
 			try{
                              if(newGroup!=null){ 
                                 System.out.println("You are successfully add group");
-                                RequestDispatcher rd= request.getRequestDispatcher("group.jsp");
-                                rd.forward(request,response);
+                                response.sendRedirect("group.jsp");
+                               
                              }else{
                                 System.out.println("Error added!");
-                                RequestDispatcher rd= request.getRequestDispatcher("addgroup.jsp");
-                                        rd.include(request,response);
+                                response.sendRedirect("addGroup.jsp");
                              }
 			}catch(Exception ex) {
 				// TODO Auto-generated catch block
