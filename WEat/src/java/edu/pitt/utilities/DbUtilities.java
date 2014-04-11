@@ -22,7 +22,7 @@ public class DbUtilities {
 
     private Connection conn = null; // connection object
     private String hostName = "127.0.0.1:3306"; // server address + port number
-    private String dbName = "bank1017"; // default database name
+    private String dbName = "WEat"; // default database name
     private String dbUserName = "root"; // login name for the database server
     private String dbPassword = ""; // password for the database server
 
