@@ -39,11 +39,8 @@ public class Group {
                 this.valid = false;
             } else if (groupExists) {
                 this.groupID = rs.getString("groupID");
-<<<<<<< HEAD
                 this.groupname = rs.getString("groupName");
-=======
-                this.groupname = rs.getString("groupname");
->>>>>>> FETCH_HEAD
+
                 this.valid = true;
             }
         } catch (SQLException ex) {
@@ -87,18 +84,13 @@ public class Group {
         this.groupname = groupname;
         this.userID = userID;
 
-<<<<<<< HEAD
+
         if (this.groupname != null) {
             String sql = "INSERT INTO WEat.groups(groupID, groupName, userID)";
             sql += "VALUES ('" +this.groupID + "', '" + this.groupname + "','"+this.userID+"')";
             db.executeUpdate(sql);
-=======
-        if (this.groupname != null && this.groupID!=null) {
-            String sql = "INSERT INTO WEat.groups(userID, groupname, groupID)";
-            sql += "VALUES ('" + this.userID + "', '" + this.groupname + "','"+this.groupID+"')";
-            db.executeQuery(sql);
->>>>>>> FETCH_HEAD
-        }
+
+    }
     }
 
     public String getGroupName() {

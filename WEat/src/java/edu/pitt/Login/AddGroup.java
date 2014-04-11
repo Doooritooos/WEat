@@ -56,7 +56,6 @@ public class AddGroup extends HttpServlet {
 //                if(hdnParam.equals("login")){
 			int userID =Integer.parseInt(request.getParameter("userID"));
 			String groupname= request.getParameter("groupname");
-<<<<<<< HEAD
                         Group newGroup = new Group(groupname, userID);
 			try{
                              if(newGroup!=null){ 
@@ -71,24 +70,9 @@ public class AddGroup extends HttpServlet {
 				// TODO Auto-generated catch block
 				ex.printStackTrace();
 			}
-=======
+
                         out.println(userID);
                         out.println(groupname);
-                        Group newGroup = new Group(groupname, userID);
-//			try{
-//                             if(newGroup!=null){ 
-//                                System.out.println("You are successfully add group");
-//                                response.sendRedirect("group.jsp");
-//                               
-//                             }else{
-//                                System.out.println("Error added!");
-//                                response.sendRedirect("addGroup.jsp");
-//                             }
-//			}catch(Exception ex) {
-//				// TODO Auto-generated catch block
-//				ex.printStackTrace();
-//			}
->>>>>>> FETCH_HEAD
 
 		
   }

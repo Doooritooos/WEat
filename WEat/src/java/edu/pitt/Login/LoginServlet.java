@@ -68,10 +68,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("currentSessionUser", backUser);
                 response.sendRedirect("group.jsp");
 
-<<<<<<< HEAD
 
-=======
->>>>>>> FETCH_HEAD
 //                RequestDispatcher rd = request.getRequestDispatcher("group.jsp");
 //                rd.forward(request, response);
 
