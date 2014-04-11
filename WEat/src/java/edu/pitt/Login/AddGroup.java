@@ -12,6 +12,7 @@ package edu.pitt.Login;
  */
 import edu.pitt.domain.Group;
 import java.io.IOException;
+import java.io.PrintWriter;
 //import java.io.PrintWriter;
 import java.sql.SQLException;
 
@@ -50,25 +51,27 @@ public class AddGroup extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
                 response.setContentType("text/html;charset-UTF-8");
-                //PrintWriter out= new PrintWriter("try.txt");
+                PrintWriter out= response.getWriter();
 //		String hdnParam	=request.getParameter("pagename");
 //                if(hdnParam.equals("login")){
 			int userID =Integer.parseInt(request.getParameter("userID"));
 			String groupname= request.getParameter("groupname");
+                        out.println(userID);
+                        out.println(groupname);
                         Group newGroup = new Group(groupname, userID);
-			try{
-                             if(newGroup!=null){ 
-                                System.out.println("You are successfully add group");
-                                response.sendRedirect("group.jsp");
-                               
-                             }else{
-                                System.out.println("Error added!");
-                                response.sendRedirect("addGroup.jsp");
-                             }
-			}catch(Exception ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
-			}
+//			try{
+//                             if(newGroup!=null){ 
+//                                System.out.println("You are successfully add group");
+//                                response.sendRedirect("group.jsp");
+//                               
+//                             }else{
+//                                System.out.println("Error added!");
+//                                response.sendRedirect("addGroup.jsp");
+//                             }
+//			}catch(Exception ex) {
+//				// TODO Auto-generated catch block
+//				ex.printStackTrace();
+//			}
 
 		
   }

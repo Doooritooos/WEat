@@ -83,7 +83,7 @@ public class Group {
         this.groupname = groupname;
         this.userID = userID;
 
-        if (this.groupname != null) {
+        if (this.groupname != null && this.groupID!=null) {
             String sql = "INSERT INTO WEat.groups(userID, groupname, groupID)";
             sql += "VALUES ('" + this.userID + "', '" + this.groupname + "','"+this.groupID+"')";
             db.executeQuery(sql);
