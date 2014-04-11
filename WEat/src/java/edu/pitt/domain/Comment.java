@@ -12,7 +12,7 @@ public class Comment {
     private int commentID; 
     private String resultID;
     private int userID;
-    private int groupID;
+    private String groupID;
     private String commentText;
     
      /**
@@ -31,7 +31,7 @@ public class Comment {
                 this.commentID = Integer.parseInt(rs.getString("commentID"));
                 this.resultID = rs.getString("resultID");
                 this.userID = Integer.parseInt(rs.getString("userID"));
-                this.groupID = Integer.parseInt(rs.getString("groupID"));
+                this.groupID = rs.getString("groupID");
                 this.commentText = rs.getString("commentText");
             }
         } catch (SQLException e) {
@@ -49,7 +49,7 @@ public class Comment {
      * @param groupID
      * @param commentText
      */
-    public Comment(String resultID, int userID, int groupID, String commentText) {
+    public Comment(String resultID, int userID, String groupID, String commentText) {
         this.resultID = resultID;
         this.userID = userID;
         this.groupID = groupID;
@@ -60,7 +60,7 @@ public class Comment {
         sql += " VALUES ";
         sql += "('" + this.resultID + "', ";
         sql += this.userID + ", ";
-        sql += this.groupID + ", ";
+        sql += "'" + this.groupID + "', ";
         sql += "'" + this.commentText + "');";
 
         DbUtilities db = new DbUtilities();

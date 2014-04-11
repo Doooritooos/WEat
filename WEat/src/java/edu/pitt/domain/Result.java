@@ -14,7 +14,7 @@ public class Result {
 
     private String resultID;
     private String resultName;
-    private int groupID;
+    private String groupID;
     private ArrayList<Integer> userIDList;
     private ArrayList<Comment> commentList;
 
@@ -25,9 +25,9 @@ public class Result {
      * @param resultID
      * @param groupID
      */
-    public Result(String resultID, int groupID) {
+    public Result(String resultID, String groupID) {
         String sql = "SELECT * FROM WEat.Result  ";
-        sql += "WHERE resultID = '" + resultID + "' AND groupID = " + groupID;
+        sql += "WHERE resultID = '" + resultID + "' AND groupID = '" + groupID + "' ; ";
         DbUtilities db = new DbUtilities();
         try {
             ResultSet rs = db.getResultSet(sql);
@@ -52,14 +52,14 @@ public class Result {
      * @param groupID
      * @param resultID
      */
-    public static void addResult(String resultName, int userID,  int groupID, String resultID) {
+    public static void addResult(String resultName, int userID,  String groupID, String resultID) {
 
         String sql = "INSERT INTO WEat.Result ";
-        sql += "(resultName, userID,groupID,yelpID) ";
+        sql += "(resultName, userID,groupID,resultID) ";
         sql += " VALUES ";
         sql += "('" + resultName + "', ";
         sql += userID + ", ";
-        sql += groupID + ", ";
+        sql += "'" + groupID + ", ";
         sql += "'" + resultID + "');";
 
         DbUtilities db = new DbUtilities();
@@ -71,7 +71,7 @@ public class Result {
      */
     public void loadCommentList() {
         String sql = "SELECT * FROM  WEat.Comment ";
-        sql += " WHERE groupID = " + this.groupID;
+        sql += " WHERE groupID = '" + this.groupID + "'";
         sql += " AND resultID = '" + this.resultID + "' ; ";
         DbUtilities db = new DbUtilities();
         try {
@@ -136,6 +136,5 @@ public class Result {
             s.append(c.toString());
         }
         return new String(s);
-    }
-    
+    }  
 }
