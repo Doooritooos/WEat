@@ -27,7 +27,6 @@
     <body role="document">
         <div class="container theme-showcase" role="main">
 
-      <!-- Main jumbotron for a primary marketing message or call to action -->
      
       <div>
       <a href="addGroup.jsp" class="btn btn-lg btn-primary btn-block active" role="button">Add Group</a>
@@ -41,7 +40,9 @@
           <ul class="list-group">
             <% User currentUser = ((User) (session.getAttribute("currentSessionUser")));
                int currentUserID =currentUser.getUserID();
+               
                Group existGroup = new Group(currentUserID);
+               if(existGroup!=null){
                
             %>
             
@@ -51,6 +52,18 @@
             <input type="hidden" name="getUserID" value="<%=currentUserID%>"/>
             <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">Search</button>
             </form>
+            
+            <%
+               }else{
+                   System.out.println("There's no group yet,please add a group");
+                   
+            %>
+            
+            <h1>There's no group yet,please add a group</h1>
+             <%
+               } 
+                   
+            %>
           </ul>
         </div>
       </div>

@@ -52,7 +52,7 @@ public class GroupSearchServlet extends HttpServlet {
 			try{
                                    System.out.println("In the Group Search Servlet");
                                     
-                                   int groupID= Integer.parseInt(request.getParameter("getGroupID"));
+                                   String groupID= request.getParameter("getGroupID");
                                    int userID= Integer.parseInt(request.getParameter("getUserID"));
 //                                    String password= request.getParameter("password");
                                    Group newSearchGroup = new Group(userID, groupID);
@@ -60,14 +60,15 @@ public class GroupSearchServlet extends HttpServlet {
                                     if(newSearchGroup.isValid()){
                                         HttpSession session = request.getSession(true);
                                         session.setAttribute("currentSearchGroup", newSearchGroup);
-//                                        response.sendRedirect("loginSuccess.jsp");
+                                        response.sendRedirect("search.jsp");
                                        
-                                        RequestDispatcher rd= request.getRequestDispatcher("search.jsp");
-                                        rd.forward(request,response);
+//                                        RequestDispatcher rd= request.getRequestDispatcher("search.jsp");
+//                                        rd.forward(request,response);
                   
                                     }else{
-                                        RequestDispatcher rd= request.getRequestDispatcher("group.jsp");
-                                        rd.include(request,response);
+                                        response.sendRedirect("group.jsp");
+//                                        RequestDispatcher rd= request.getRequestDispatcher("group.jsp");
+//                                        rd.include(request,response);
                                     }
                                 }catch(Throwable exc){
 

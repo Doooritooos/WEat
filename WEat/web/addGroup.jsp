@@ -4,7 +4,7 @@
     Author     : huanwang
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8" import="edu.pitt.Login.User" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="edu.pitt.domain.User" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -31,7 +31,8 @@
                     <% User currentUser = ((User) (session.getAttribute("currentSessionUser")));%>
                     <input type="text" name="userID" class="form-control" value="<%=currentUser.getUserID()%>">
                     <input type="text" name="groupname" class="form-control" placeholder="Group Name" required autofocus>
-                    <input type="text" name="userID" class="form-control" placeholder="userID" required autofocus>
+                     
+<!--                    <input type="text" name="userID" class="form-control" placeholder="userID" required autofocus>-->
                     <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">Submit</button>
                     <a href="group.jsp" class="btn btn-lg btn-primary btn-block active" role="button">Cancel</a>
 		</form>
