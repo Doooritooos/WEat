@@ -5,8 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"
-        import="edu.pitt.Login.User"
-        import="edu.pitt.Login.Group"
+        import="edu.pitt.domain.User"
+        import="edu.pitt.domain.Group"
         %>
 <!DOCTYPE html>
 <html>

@@ -62,11 +62,11 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("currentSessionUser", backUser);
 //                                        response.sendRedirect("loginSuccess.jsp");
 
-                RequestDispatcher rd = request.getRequestDispatcher("loginSuccess.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("group.jsp");
                 rd.forward(request, response);
 
             } else {
-                RequestDispatcher rd = request.getRequestDispatcher("loginFail.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
                 rd.include(request, response);
             }
         } catch (Throwable exc) {
