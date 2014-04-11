@@ -16,6 +16,15 @@
 <%@page import="com.temboo.Library.Yelp.SearchForBusiness"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
+<%
+    String userID=null;
+    String groupID=null;
+    if(request.getParameter("userID")!=null&&request.getParameter("groupID")!=null){
+        userID=request.getParameter("userID");
+        groupID=request.getParameter("groupID");
+    }
+%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

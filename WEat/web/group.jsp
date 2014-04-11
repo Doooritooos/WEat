@@ -46,7 +46,7 @@
                
             %>
             
-            <form class="form-login" action="GroupSearchServlet" method ="POST">
+            <form class="form-login" action="search.jsp" method ="POST">
             <li class="list-group-item"><%=existGroup.getGroupID()%></li>
             <input type="hidden" name="getGroupID" value="<%=existGroup.getGroupID()%>"/>
             <input type="hidden" name="getUserID" value="<%=currentUserID%>"/>
