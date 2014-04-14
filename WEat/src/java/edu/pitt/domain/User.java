@@ -46,6 +46,7 @@ public class User {
                 System.out.println("Email/Password entered is Incorrect or User doesnot Exists.");
                 this.valid = false;
             } else if (userExists) {
+//                this.email = rs.getString("email");
                 this.password = rs.getString("password");
                 this.username = rs.getString("username");
                 this.valid = true;

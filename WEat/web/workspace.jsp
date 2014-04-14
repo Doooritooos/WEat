@@ -97,11 +97,11 @@
                     String resultID = results.get(i).getResultID();
             %>
             <form id="formComment" name= "formComment" method="post" action="workspace.jsp">
+                 <input type="text" name="txtComment" id="txtComment"  class="form-control"  placeholder="Add comment..." required autofocus value=""/>
                 <button type="submit" class="btn btn-primary" name="btnAddComment" id="btnAddComment" value = "Add">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
-                <input type="text" name="txtComment" id="txtComment"  class="form-control"  placeholder="Add comment..." required autofocus value=""/>
-                <!--                <input type="submit" name="btnAddComment" id="btnAddComment" value = "Add"><br>-->
+                  <!--                <input type="submit" name="btnAddComment" id="btnAddComment" value = "Add"><br>-->
                 
                 <input type="hidden" name="selectedResultID" id="selectedResultID" value="<%=resultID%>">
             </form>

@@ -11,6 +11,7 @@ package edu.pitt.Login;
  * @author Liu
  */
 import edu.pitt.domain.Group;
+import edu.pitt.domain.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 //import java.io.PrintWriter;
@@ -55,12 +56,15 @@ public class AddGroup extends HttpServlet {
 //		String hdnParam	=request.getParameter("pagename");
 //                if(hdnParam.equals("login")){
 			int userID =Integer.parseInt(request.getParameter("userID"));
+                        User curUser = new User(userID);
 			String groupname= request.getParameter("groupname");
                         Group newGroup = new Group(groupname, userID);
                         
 			try{
                              if(newGroup!=null){ 
                                 System.out.println("You are successfully add group");
+                                HttpSession session = request.getSession(true);
+                                session.setAttribute("currentSessionUser", curUser);
                                 response.sendRedirect("group.jsp");
                                
                              }else{

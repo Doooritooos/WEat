@@ -54,8 +54,10 @@
             <!-- <div class="row"> -->
             <div class="col-sm-4" align="center">
                 <ul class="list-group">
-                    <% User currentUser = ((User) (session.getAttribute("currentSessionUser")));
-                       session.setAttribute("currentSessionUser", currentUser);
+                    <% 
+                      if(session.getAttribute("currentSessionUser")!=null){
+                        User currentUser = ((User) (session.getAttribute("currentSessionUser")));
+                        session.setAttribute("currentSessionUser", currentUser);
                         int currentUserID = currentUser.getUserID();
                         User curUser = new User(currentUserID);
                         String curUserName = curUser.getUserName();
@@ -68,18 +70,22 @@
                         <h1><%=curUserName%>,<small>&nbsp Your Groups</small></h1>
                         
                     </div>
-                        
+                    <form class="form-login" action="" method ="POST" id="form1">   
                     <%   
                         if (groupList.size() > 0) {
                             for (int i = 0; i < groupList.size(); i++) {
                                 Group g = groupList.get(i);
+                                System.out.println(g.getGroupName());
                     %>
-                    
-                    
+
                     <br>
-                    <form class="form-login" action="" method ="POST" id="form1" name="form1">
+                    
+                   
                         <li class="list-group-item"><%=g.getGroupName()%></li>
                         <input type="hidden" name="getGroupID" value="<%=g.getGroupID()%>"/>
+                        <%
+                        System.out.println(g.getGroupName());
+                        %>
                         <input type="hidden" name="getUserID" value="<%=currentUserID%>"/>
 <!--                        <button class="btn btn-lg btn-primary btn-block" type="submit" value="search.jsp">Search</button>
                         <button class="btn btn-lg btn-primary btn-block" type="submit" value="addMember.jsp">Add Member</button>-->
@@ -90,7 +96,8 @@
                         
                     </form>
                     <%
-                        }
+                       System.out.println(g.getGroupName());
+                            }
                     } else {
                     %>
                    
@@ -99,6 +106,7 @@
                     
                     <%
                         }
+                      }
                         
                     
                     %>
@@ -114,6 +122,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/docs.min.js"></script>
+        
         
     </body>
 </html>
