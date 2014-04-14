@@ -86,9 +86,6 @@
                 out.println("<p>" + results.get(i).commenListToString() + "</p>");
 
                 String resultID = results.get(i).getResultID();
-//                String formID = "comment" +resultID;
-//                String txtID = "txt" + resultID;
-//                String btnID = "btn" + resultID;
 %>
         <form id="formComment" name= "formComment" method="post" action="workspace.jsp">
             Add comment
