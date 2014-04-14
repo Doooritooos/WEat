@@ -62,19 +62,20 @@ public class Comment {
         sql += " VALUES ";
         sql += "('" + this.resultID + "', ";
         sql += this.userID + ", ";
-        //sql += "'" + this.groupID + "', ";
         sql += "'" + this.commentText + "');";
+        System.out.println("[Comment(String resultID, int userID, String groupID, String commentText)]sql = " + sql );
         DbUtilities db = new DbUtilities();
-        db.executeQuery(sql);
+        db.executeUpdate(sql);
         db.closeDbConnection();
     }
-    
-    public String toString()
+      
+    public int getUserID()
     {
-//        User user = new User(userID);
-//        String userName = user.getUserName();
-       // String  s = userName + " said: " + commentText + "<br>";
-        String  s = userID + " said: " + commentText + "<br>";
-        return s;
-    } 
+        return userID;
+    }
+    
+    public String getCommentText()
+    {
+        return commentText;
+    }
 }

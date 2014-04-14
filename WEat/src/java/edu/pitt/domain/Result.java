@@ -70,7 +70,7 @@ public class Result {
         sql += "'" + resultID + "');";
 
         DbUtilities db = new DbUtilities();
-        db.executeQuery(sql);
+        db.executeUpdate(sql);
         db.closeDbConnection();
     }
 
@@ -143,10 +143,11 @@ public class Result {
         {
             return "";
         }
-        s.append("Comments on " + resultName + ":<br>");
+        //s.append("Comments on " + resultName + ":<br>");
         for(Comment c : commentList )
         {
-            s.append(c.toString());
+            String userName = userList.get(c.getUserID()).getUserName();
+            s.append(userName + " : " + c.getCommentText() + "<br>");
         }
         return new String(s);
     }  
