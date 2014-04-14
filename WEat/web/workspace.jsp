@@ -34,7 +34,7 @@
 
 //    userID = 2;
 //    groupID = "77ID-8JIE";
-     group = new Group(userID, groupID);
+    group = new Group(userID, groupID);
     myWorkspace = new Workspace(userID, groupID);
 //    out.println("My workspace: userID = " + myWorkspace.getUserID() + ", groupID = " + myWorkspace.getGroupID() + ", resultList = " + myWorkspace.getReultList() + "<br><br>");
 
@@ -62,52 +62,66 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Workspace Page</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/signin.css" rel="stylesheet">
     </head>
     <body>
+        <div class="container">
 
-        <%            //sort resultList based on the number of user likes
-            //more users like a result, the higher a result ranks
-            ArrayList<Result> results = new ArrayList(myWorkspace.getReultList().values());
+            <%            //sort resultList based on the number of user likes
+                //more users like a result, the higher a result ranks
+                ArrayList<Result> results = new ArrayList(myWorkspace.getReultList().values());
 
-            class resultComparator implements Comparator<Result> {
+                class resultComparator implements Comparator<Result> {
 
-                @Override
-                public int compare(Result a, Result b) {
-                    return a.getUserList().size() > b.getUserList().size() ? -1 : a.getUserList().size() == b.getUserList().size() ? 0 : 1;
+                    @Override
+                    public int compare(Result a, Result b) {
+                        return a.getUserList().size() > b.getUserList().size() ? -1 : a.getUserList().size() == b.getUserList().size() ? 0 : 1;
+                    }
                 }
-            }
 
-            Collections.sort(results, new resultComparator());
+                Collections.sort(results, new resultComparator());
 
-            out.println("<h1>Workspace of group " + group.getGroupName() + "</h1>");
-            for (int i = 0; i < results.size(); i++) {
-                out.println("<a href='http://www.yelp.com/biz/" + results.get(i).getResultID() + "'> " + results.get(i).getResultName() + " </a>");
-                out.println("<br>liked by " + results.get(i).userListToString());
-                out.println("<p>" + results.get(i).commenListToString() + "</p>");
+                out.println("<h1>Workspace of  " + group.getGroupName() + "</h1>");
+                for (int i = 0; i < results.size(); i++) {
+                    %>
+                    <div class="panel panel-primary">
+                    <div class="panel-heading">                   
+                    <%
+                    out.println("<h3 class='panel-title'><a href='http://www.yelp.com/biz/" + results.get(i).getResultID() + "'> " + results.get(i).getResultName() + " </a></h3>");
+                    out.println("</div>");
+                    out.println("<div class='panel-body'>");
+                    out.println("<br>liked by " + results.get(i).userListToString());
+                    out.println("<p>" + results.get(i).commenListToString() + "</p>");
 
-                String resultID = results.get(i).getResultID();
-%>
-        <form id="formComment" name= "formComment" method="post" action="workspace.jsp">
-            Add comment
-            <input type="text" name="txtComment" id="txtComment" value=""/>
-            <input type="submit" name="btnAddComment" id="btnAddComment" value = "Add"><br>
-            <input type="hidden" name="selectedResultID" id="selectedResultID" value="<%=resultID%>">
-        </form>
+                    String resultID = results.get(i).getResultID();
+            %>
+            <form id="formComment" name= "formComment" method="post" action="workspace.jsp">
+                <button type="submit" class="btn btn-primary" name="btnAddComment" id="btnAddComment" value = "Add">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+                <input type="text" name="txtComment" id="txtComment"  class="form-control"  placeholder="Add comment..." required autofocus value=""/>
+                <!--                <input type="submit" name="btnAddComment" id="btnAddComment" value = "Add"><br>-->
+                
+                <input type="hidden" name="selectedResultID" id="selectedResultID" value="<%=resultID%>">
+            </form>
+            </div>
+          </div>
+
+            <%
+ //                   out.println("<p>--------------------------------------------------------</p>");
+                }
+
+            %> 
 
 
-        <%
-                out.println("<p>--------------------------------------------------------</p>");
-            }
-
-        %> 
-
-
-        <!--        <input type="text" name="txtComment" id="txtComment" value=""/>
-                <input type="submit" name="btnAddComment" id="btnAddComment" value = "Add"><br>
-            </form>-->
-        <form name="search" action="search.jsp">   
-            <input type="submit" value="Back to Search">
-        </form>
-
+            <!--        <input type="text" name="txtComment" id="txtComment" value=""/>
+                    <input type="submit" name="btnAddComment" id="btnAddComment" value = "Add"><br>
+                </form>-->
+            <form name="search" action="search.jsp">   
+                <input type="submit" value="Back to Search">
+            </form>
+            
+        </div>
     </body>
 </html>
