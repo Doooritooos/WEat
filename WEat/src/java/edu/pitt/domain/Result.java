@@ -146,7 +146,9 @@ public class Result {
         //s.append("Comments on " + resultName + ":<br>");
         for(Comment c : commentList )
         {
-            String userName = userList.get(c.getUserID()).getUserName();
+            User user = new User(c.getUserID());
+            String userName = user.getUserName();
+            //String userName = userList.get(c.getUserID()).getUserName();
             s.append(userName + " : " + c.getCommentText() + "<br>");
         }
         return new String(s);

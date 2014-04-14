@@ -36,7 +36,7 @@
 //    groupID = "77ID-8JIE";
      group = new Group(userID, groupID);
     myWorkspace = new Workspace(userID, groupID);
-    out.println("My workspace: userID = " + myWorkspace.getUserID() + ", groupID = " + myWorkspace.getGroupID() + ", resultList = " + myWorkspace.getReultList() + "<br><br>");
+//    out.println("My workspace: userID = " + myWorkspace.getUserID() + ", groupID = " + myWorkspace.getGroupID() + ", resultList = " + myWorkspace.getReultList() + "<br><br>");
 
     if (myWorkspace.getReultList().size() == 0) {
         response.sendRedirect("search.jsp");
