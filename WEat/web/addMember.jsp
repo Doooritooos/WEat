@@ -32,17 +32,23 @@
                     <center>
                     <h2 class="form-login-heading">Add Member</h2>
                     </center>
+                    <form class="form-login" action="AddMember" method ="POST">
                     <% int userID = 0;
                        String groupID = null;
                        if (request.getParameter("getUserID") != null && request.getParameter("getGroupID") != null) {
                            userID = Integer.parseInt(request.getParameter("getUserID"));
                            groupID = request.getParameter("getGroupID");
+                           System.out.println(groupID);
                            Group curGroup= new Group(userID,groupID);
+                           
+                           System.out.println(curGroup.getGroupName());
+                           
                     %>
                                  
-                    <form class="form-login" action="AddMember" method ="POST">
-                    <input type="hidden" name="groupID" value="<%=groupID%>"/>
+                    
+                    <input type="hidden" name="groupID" value="<%=curGroup.getGroupID()%>"/>
                     <input type="hidden" name="groupName" value="<%=curGroup.getGroupName()%>"/>
+                    <input type="hidden" name="curUserID" value="<%=userID%>"/>
                     <label>Enter new member's email:</label><br>
                     <input type="text" name="newEmail" class="form-control" placeholder="New Member's email" required autofocus>
                      
