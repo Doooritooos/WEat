@@ -13,6 +13,21 @@
             <title>Login</title>
             <link href="css/bootstrap.css" rel="stylesheet">
             <link href="css/signin.css" rel="stylesheet">
+            <script>
+            function validate(){
+            var email=document.form.email.value;
+            var password=document.form.password.value;
+            if(email==""){
+             alert("Please Enter your Email!");
+              return false;
+            }
+            if(password==""){
+             alert("Please Enter your Password!");
+              return false;
+            }
+            return true;
+            }
+            </script>
 	</head>
 
 	<body>
@@ -26,7 +41,7 @@
                 </div>
                 
                 <div>
-		<form class="form-login" action="LoginServlet" method ="POST">
+		<form name="form" class="form-login" action="LoginServlet" method ="POST" onsubmit="javascript:return validate();">
 <!--                    <input type="hidden" name="pagename" value="login"/>-->
                     <center>
                     <h2 class="form-login-heading">Please login</h2>
@@ -49,6 +64,5 @@
         
         <script src="js/transition.js" type="text/javascript"></script>
 </html>
-
 
 
