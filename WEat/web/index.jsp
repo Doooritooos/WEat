@@ -36,6 +36,12 @@
                     <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">Log in</button>
                     <a href="register.jsp" class="btn btn-lg btn-primary btn-block active" role="button">Register here</a>
 		</form>
+               
+                 
+                    
+                
+                    
+                    
                 </div>
                 
             </div>

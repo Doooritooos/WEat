@@ -46,9 +46,8 @@ public class LoginServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset-UTF-8");
-       // PrintWriter out = response.getWriter();
-//		String hdnParam	=request.getParameter("pagename");
-//                if(hdnParam.equals("login")){
+        PrintWriter out = response.getWriter();
+
         try {
             System.out.println("In the login Servlet");
 
@@ -64,7 +63,6 @@ public class LoginServlet extends HttpServlet {
 
             if (backUser.isValid()) {
                 HttpSession session = request.getSession(true);
-                
                 session.setAttribute("currentSessionUser", backUser);
                 response.sendRedirect("group.jsp");
 
@@ -73,7 +71,10 @@ public class LoginServlet extends HttpServlet {
 //                rd.forward(request, response);
 
             } else {
+//              HttpSession session = request.getSession(true);
+//              session.setAttribute("Login_Wrong","Wrong") ;
                 response.sendRedirect("login.jsp");
+                
             }
         } catch (Throwable exc) {
 

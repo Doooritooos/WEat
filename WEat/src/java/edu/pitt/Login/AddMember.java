@@ -53,21 +53,25 @@ public class AddMember extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
                 response.setContentType("text/html;charset-UTF-8");
                 PrintWriter out= response.getWriter();
-                        String newEmail=request.getParameter("newEmail");
-			String groupID =request.getParameter("groupID");
-                        String groupName=request.getParameter("groupName");
-                        User newMember = new User(newEmail);
+                int curUserID = Integer.parseInt(request.getParameter("curUserID"));
+                String newEmail=request.getParameter("newEmail");
+		String groupID =request.getParameter("groupID");
+                String groupName=request.getParameter("groupName");
+                User newMember = new User(newEmail);
                        
                         int newUserID = newMember.getUserID();
-                        String newUserName = newMember.getUserName();
                         
                         Group newGroup = new Group(groupID, newUserID, groupName);
                         
+                        User curUser=new User(curUserID);
                         
 			try{
                              if(newGroup!=null){ 
+                                
                                 System.out.println("You are successfully add the member");
                                 out.println("<script language = javascript> alert('You have succeessfully add the member'); </script>");
+                                HttpSession session = request.getSession(true);
+                                session.setAttribute("currentSessionUser", curUser);
                                 response.sendRedirect("group.jsp");
                                
                              }else{
