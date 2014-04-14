@@ -1,15 +1,14 @@
 <%-- 
-    Document   : workspace
-    Created on : 2014-3-20, 18:33:32
+    Document   : workspaceTest
+    Created on : 2014-4-11, 17:59:06
     Author     : Liu
 --%>
-
-
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.Comparator"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="edu.pitt.utilities.StringUtilities"%>
+<%@page import="edu.pitt.utilities.*"%>
 <%@page import="edu.pitt.domain.*"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
@@ -17,45 +16,27 @@
     Workspace myWorkspace;
     User user = null;
 
-//    //check if user is valid
-//    if (session.getAttribute("currentSessionUser") == null) {
-//        response.sendRedirect("login.jsp?error=Invalid user!");
-//    } else {
-//        user = (User) session.getAttribute("currentSessionUser");
-//        if (user.isValid() == false) {
-//            response.sendRedirect("login.jsp?error=Invalid user!");
-//        }
-//    }
-//    int userID = user.getUserID();
-//    Group group = (Group) session.getAttribute("currentSearchGroup");
-//    String groupID = (String) group.getGroupID();
-   String defaultResultID = null;
-   String selectedResultID = null;
-    
-    int userID = 1;
+    int userID = 2;
     String groupID = "77ID-8JIE";
     myWorkspace = new Workspace(userID, groupID);
+    out.println("My workspace: userID = " + myWorkspace.getUserID() + ", groupID = " + myWorkspace.getGroupID() + ", resultList = " + myWorkspace.getReultList() + "<br><br>");
 
-//    //chaching
-//    if (session.getAttribute("myWorkspace") == null) {
-//        myWorkspace = new Workspace(userID, groupID);
-//        session.setAttribute("Workspace", myWorkspace);
-//        //out.println("new");
-//    } else {
-//        myWorkspace = (Workspace) session.getAttribute("Workspace");
-//    }
-
-    //if Button addComment  is clicked
-    if (request.getParameter("btnAddComment") != null && request.getParameter("txtComment") != null) {
+    if (myWorkspace.getReultList().size() == 0) {
+        response.sendRedirect("search.jsp");
+    }
+    
+     //if Button addComment  is clicked
+    if (request.getParameter("btnAddComment") != null && request.getParameter("txtComment") != null && request.getParameter("selectedResultID") != null) {
         String txtComment = request.getParameter("txtComment");
-        selectedResultID = request.getParameter("cboResult");
+        String selectedResultID = request.getParameter("selectedResultID");
+        System.out.println("*_*_*_*_*_*_*_*selectedResultID = " + selectedResultID + "txtComment = " + txtComment );
         //insert the new commnet into database WEat.Comment
         Comment newComment = new Comment(selectedResultID, userID, groupID, txtComment);
         //update the commentList of the result by reloading from databse table  WEat.Comment 
         Result updateResult = new Result(selectedResultID, groupID);
         myWorkspace.getReultList().put(selectedResultID, updateResult);
     }
-
+    
 %>
 
 
@@ -66,14 +47,10 @@
         <title>Workspace Page</title>
     </head>
     <body>
-        
-        <%  
-    
-            if(myWorkspace.getReultList().size() == 0)
-            {
-                response.sendRedirect("search.jsp");
-            }
-    
+
+        <%
+            //sort resultList based on the number of user likes
+            //more users like a result, the higher a result ranks
             ArrayList<Result> results = new ArrayList(myWorkspace.getReultList().values());
 
             class resultComparator implements Comparator<Result> {
@@ -84,37 +61,37 @@
                 }
             }
 
-            //sort resultList based on the number of user likes
-            //more users like a result, the higher a result ranks
             Collections.sort(results, new resultComparator());
 
+            out.println("<h1>Workspace of group " + groupID + "</h1>");
             for (int i = 0; i < results.size(); i++) {
-                out.println("<a href='http://www.yelp.com/biz/?resultID=" + results.get(i).getResultID() + "'> " + results.get(i).getResultName() + " </a>");
-                out.println("liked by" + results.get(i).userListToString() + "</br>");
+                out.println("<a href='http://www.yelp.com/biz/" + results.get(i).getResultID() + "'> " + results.get(i).getResultName() + " </a>");
+                out.println("<br>liked by " + results.get(i).userListToString());
                 out.println("<p>" + results.get(i).commenListToString() + "</p>");
+                
+                String resultID =  results.get(i).getResultID();
+//                String formID = "comment" +resultID;
+//                String txtID = "txt" + resultID;
+//                String btnID = "btn" + resultID;
+        %>
+        <form id="formComment" name= "formComment" method="post" action="workspace.jsp">
+            Add comment
+            <input type="text" name="txtComment" id="txtComment" value=""/>
+            <input type="submit" name="btnAddComment" id="btnAddComment" value = "Add"><br>
+            <input type="hidden" name="selectedResultID" id="selectedResultID" value="<%=resultID%>">
+        </form>
+
+
+        <%
+                out.println("<p>--------------------------------------------------------</p>");
             }
 
         %> 
 
-        Add comment on:  
-        <select id ="cboResult" name="cboResult" >
-            <%                    if (myWorkspace != null) {
-                    String[] resultIDList = myWorkspace.getResultIDList();
-                    defaultResultID = resultIDList[0];
-                    for (int i = 0; i < resultIDList.length; i++) {
-                        if (i == 0) {
-                            out.println("<option selected value = '" + defaultResultID + "'>result # " + defaultResultID + "</option>");
-                        } else {
-                            out.println("<option value = '" + resultIDList[i] + "'>account # " + resultIDList[i] + "</option>");
-                        }
-                    }
-                }
-            %>
-        </select>
-        <br>
-        <input type="text" name="txtComment" id="txtComment" value=""/>
+
+<!--        <input type="text" name="txtComment" id="txtComment" value=""/>
         <input type="submit" name="btnAddComment" id="btnAddComment" value = "Add"><br>
-    </form>
+    </form>-->
     <form name="search" action="search.jsp">   
         <input type="submit" value="Back to Search">
     </form>
