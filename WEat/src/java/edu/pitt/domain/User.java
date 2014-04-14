@@ -99,6 +99,33 @@ public class User {
             db.executeUpdate(sql);
         }
     }
+    
+        public User(String email) {
+        this.email = email;
+   
+
+        String sql = "SELECT * FROM WEat.user WHERE email = '"
+                + this.email  + "'";
+        try {
+            rs = db.getResultSet(sql);
+            boolean userExists = rs.next();
+
+            if (!userExists) {
+                System.out.println("Email entered is Incorrect or User doesnot Exists.");
+                this.valid = false;
+            } else if (userExists) {
+                this.userID = rs.getInt("userID");
+                this.username = rs.getString("username");
+                this.valid = true;
+            }
+        } catch (SQLException ex) {
+            // TODO Auto-generated catch block
+            System.out.println("Log In failed: An Exception has occurred! " + ex);
+        } finally {
+            db.closeDbConnection();
+        }
+
+    }
 
     public String getEmail() {
         return email;

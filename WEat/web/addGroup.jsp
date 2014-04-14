@@ -29,7 +29,8 @@
                     <h2 class="form-login-heading">Add Group</h2>
                     </center>
                     <% User currentUser = ((User) (session.getAttribute("currentSessionUser")));%>
-                    <input type="text" name="userID" class="form-control" value="<%=currentUser.getUserID()%>">
+                    <input type="text" name="userName" class="form-control" value="<%=currentUser.getUserName()%>">
+                    <input type="hidden" name="userID" value="<%=currentUser.getUserID()%>"/>
                     <input type="text" name="groupname" class="form-control" placeholder="Group Name" required autofocus>
                      
 <!--                    <input type="text" name="userID" class="form-control" placeholder="userID" required autofocus>-->

@@ -32,7 +32,7 @@
                     <h2 class="form-login-heading">Please register</h2>
                     </center>
                     <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
-                    <input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
+                    <input type="text" name="email" class="form-control" placeholder="Email" required>
                     <input type="password" name="password" class="form-control" placeholder="Password" required>
                     <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">Sign Up</button>
 		</form>

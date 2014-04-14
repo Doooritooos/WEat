@@ -133,6 +133,7 @@
                 JSONObject location = (JSONObject) parser.parse(String.valueOf(jsonObj.get("location")));
                 JSONArray displayAddress = (JSONArray) location.get("display_address");
                 String address = (String) displayAddress.get(0);
+                System.out.println(userID);
             %>
             <p><%=address%></p>
             <p><%=location.get("city")%>, <%=location.get("state_code")%> <%=location.get("postal_code")%></p>          

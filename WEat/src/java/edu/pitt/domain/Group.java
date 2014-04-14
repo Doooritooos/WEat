@@ -68,7 +68,20 @@ public class Group {
             sql += "VALUES ('" +this.groupID + "', '" + this.groupname + "','"+this.userID+"')";
             db.executeUpdate(sql);
 
+        }
     }
+    
+     public Group(String groupID, int userID, String groupname) {
+        this.groupID =groupID;
+        this.groupname = groupname;
+        this.userID = userID;
+
+        if (this.groupID != null) {
+            String sql = "INSERT INTO WEat.groups(groupID, groupName, userID)";
+            sql += "VALUES ('" +this.groupID + "', '" + this.groupname + "','"+this.userID+"')";
+            db.executeUpdate(sql);
+
+        }
     }
 
     public String getGroupName() {
