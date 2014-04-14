@@ -28,29 +28,6 @@ public class Group {
 
     public Group(int userID) {
         this.userID = userID;
-
-        String sql = "SELECT * FROM WEat.groups WHERE userID = '"
-                + this.userID + "'";
-        try {
-            rs = db.getResultSet(sql);
-            boolean groupExists = rs.next();
-
-            if (!groupExists) {
-                System.out.println("This group doesnot Exists.");
-                this.valid = false;
-            } else if (groupExists) {
-                this.groupID = rs.getString("groupID");
-                this.groupname = rs.getString("groupName");
-
-                this.valid = true;
-            }
-        } catch (SQLException ex) {
-            // TODO Auto-generated catch block
-            System.out.println("An Exception has occurred! " + ex);
-        } finally {
-            db.closeDbConnection();
-        }
-
     }
 
     public Group(int userID, String groupID) {
@@ -121,7 +98,7 @@ public class Group {
            
             while(rs.next())
             {
-                Group group = new Group(userID, rs.getString("groupID"));
+                Group group = new Group(this.userID, rs.getString("groupID"));
                 groupList.add(group);
             }
         } catch (SQLException ex) {

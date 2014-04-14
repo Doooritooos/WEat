@@ -24,7 +24,7 @@ public class DbUtilities {
     private String hostName = "127.0.0.1:3306"; // server address + port number
     private String dbName = "WEat"; // default database name
     private String dbUserName = "root"; // login name for the database server
-    private String dbPassword = "123456"; // password for the database server
+    private String dbPassword = ""; // password for the database server
 
     /**
      * Default constructor creates a connection to database at the time of instantiation.

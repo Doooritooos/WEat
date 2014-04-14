@@ -22,7 +22,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ShareServlet", urlPatterns = {"/ShareServlet"})
 public class ShareServlet extends HttpServlet {
 
-   
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,35 +34,34 @@ public class ShareServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ShareServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ShareServlet at " + request.getContextPath() + "</h1>");
 
             if (request.getParameter("resultId") != null && request.getParameter("resultName") != null) {
                 String id = request.getParameter("resultId");
                 String name = request.getParameter("resultName");
-                String userID = (String)session.getAttribute("userID");
-                String groupID = (String)session.getAttribute("groupID");
-                out.println("<p>" + id + "</p>");
-                out.println("<p>"+name+"</p>");
-                
-                String sql = "INSERT INTO result (resultID, userID, groupID) values ("+id+","+userID+","+groupID+");";
+                String userID = request.getParameter("userID");
+                String groupID = request.getParameter("groupID");
+
+                String sql = "INSERT INTO result (resultID,resultName,userID,`groupID`) values ('" + id + "','" + name + "'," + userID + ",'" + groupID + "');";
+                System.out.println(sql);
                 DbUtilities db = new DbUtilities();
-                db.executeQuery(sql);
-                
+
+                if (db.executeUpdate(sql)) {
+                    db.closeDbConnection();
+                    response.sendRedirect("search.jsp?share=Shared Successfully!");
+
+                } else {
+                    db.closeDbConnection();
+                    response.sendRedirect("search.jsp?share=You have already shared this result");
+
+                }
+
             } else {
                 out.println("<p>sorry</p>");
-
             }
-            out.println("</body>");
-            out.println("</html>");
+
         }
     }
 
