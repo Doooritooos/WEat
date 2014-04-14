@@ -40,6 +40,7 @@
             <div class="col-sm-4" align="center">
                 <ul class="list-group">
                     <% User currentUser = ((User) (session.getAttribute("currentSessionUser")));
+                       session.setAttribute("currentSessionUser", currentUser);
                         int currentUserID = currentUser.getUserID();
 
                         Group existGroup = new Group(currentUserID);
@@ -54,7 +55,7 @@
                         <li class="list-group-item"><%=g.getGroupName()%></li>
                         <input type="hidden" name="getGroupID" value="<%=g.getGroupID()%>"/>
                         <input type="hidden" name="getUserID" value="<%=currentUserID%>"/>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit" href="search.jsp">Search</button>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">Search</button>
                     </form>
                     <%
                         }

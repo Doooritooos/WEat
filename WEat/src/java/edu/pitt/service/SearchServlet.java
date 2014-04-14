@@ -49,6 +49,8 @@ public class SearchServlet extends HttpServlet {
             String city = null;
             String category = null;
             String neighborhood = null;
+            String userID = request.getParameter("userID");
+            String groupID = request.getParameter("groupID");
             HttpSession httpSession = request.getSession(true);
 
             if (request.getParameter("rdoSearchMethod").equals("SearchByBusinessName")) {
@@ -72,6 +74,8 @@ public class SearchServlet extends HttpServlet {
 
                     httpSession.setAttribute("resultObj", searchForBusinessResults);
                     httpSession.setAttribute("result", "business");
+                    httpSession.setAttribute("userID", userID);
+                    httpSession.setAttribute("groupID", groupID);
                     response.sendRedirect("search.jsp");
 
                 } else {
@@ -97,6 +101,8 @@ public class SearchServlet extends HttpServlet {
                     SearchByCategoryResultSet searchByCategoryResults = searchByCategoryChoreo.execute(searchByCategoryInputs);
                     httpSession.setAttribute("resultObj", searchByCategoryResults);
                     httpSession.setAttribute("result", "category");
+                    httpSession.setAttribute("userID", userID);
+                    httpSession.setAttribute("groupID", groupID);
                     response.sendRedirect("search.jsp");
 
                 } else {
@@ -119,6 +125,8 @@ public class SearchServlet extends HttpServlet {
                     SearchByCityResultSet searchByCityResults = searchByCityChoreo.execute(searchByCityInputs);
                     httpSession.setAttribute("resultObj", searchByCityResults);
                     httpSession.setAttribute("result", "city");
+                    httpSession.setAttribute("userID", userID);
+                    httpSession.setAttribute("groupID", groupID);
                     response.sendRedirect("search.jsp");
 
                 } else {
@@ -141,6 +149,8 @@ public class SearchServlet extends HttpServlet {
                     SearchByNeighborhoodResultSet searchByNeighborhoodResults = searchByNeighborhoodChoreo.execute(searchByNeighborhoodInputs);
                     httpSession.setAttribute("resultObj", searchByNeighborhoodResults);
                     httpSession.setAttribute("result", "neighborhood");
+                    httpSession.setAttribute("userID", userID);
+                    httpSession.setAttribute("groupID", groupID);
                     response.sendRedirect("search.jsp");
 
                 } else {

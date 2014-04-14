@@ -18,12 +18,31 @@
 <!DOCTYPE html>
 
 <%
-    String userID=null;
-    String groupID=null;
-    if(request.getParameter("userID")!=null&&request.getParameter("groupID")!=null){
-        userID=request.getParameter("userID");
-        groupID=request.getParameter("groupID");
+    if (session.getAttribute("currentSessionUser") == null) {
+        response.sendRedirect("index.jsp");
     }
+    
+    session.setAttribute("currentSessionUser", session.getAttribute("currentSessionUser"));
+    
+    if (request.getParameter("share") != null) {
+        out.println("<script language='javascript'>alert('" + request.getParameter("share") + "')</script>");
+    }
+
+    String userID = null;
+    String groupID = null;
+    if (request.getParameter("getUserID") != null && request.getParameter("getGroupID") != null) {
+        userID = request.getParameter("getUserID");
+        groupID = request.getParameter("getGroupID");
+    }
+    if (session.getAttribute("userID") == null && session.getAttribute("groupID") == null) {
+        session.setAttribute("userID", userID);
+        session.setAttribute("groupID", groupID);
+    } else {
+        session.getAttribute("userID");
+        session.getAttribute("groupID");
+    }
+
+
 %>
 <html>
     <head>
@@ -32,6 +51,7 @@
         <title>Search</title>
     </head>
     <body>
+        <a href="workspace.jsp">Go to Workspace</a>
         <form id="frmSearch" method="get" action="SearchServlet" onsubmit="return validateForm()">
             <input type="text" id="txtBusinessName" name="txtBusinessName">
             <br>
@@ -41,14 +61,16 @@
             <input type="radio" id="rdoSearchMethod" name="rdoSearchMethod" value="SearchByCategory">Search by category
             <input type="radio" id="rdoSearchMethod" name="rdoSearchMethod" value="SearchByCity">Search by city
             <input type="radio" id="rdoSearchMethod" name="rdoSearchMethod" value="SearchByNeighborhood">Search by neighborhood
+            <input type="hidden" name="userID" value="<%=userID%>"/>
+            <input type="hidden" name="groupID" value="<%=groupID%>"/>
             <input type="submit" id="btnSearch" name="btnSearch">
 
         </form>    
 
-        <%
-            String result = null;
+        <%  String result = null;
             JSONObject jsonObj = null;
             JSONParser parser = new JSONParser();
+
             if (session.getAttribute("resultObj") != null) {
                 if (session.getAttribute("result").equals("business")) {
                     SearchForBusinessResultSet resultObj = (SearchForBusinessResultSet) session.getAttribute("resultObj");
@@ -86,9 +108,12 @@
             <img src='<%=jsonObjBusinesses.get("rating_img_url")%>'/>
             <p><%=jsonObjBusinesses.get("display_phone")%></p>
 
+
             <form id="frmShare" method="post" action="ShareServlet">
                 <input type="hidden" name="resultId" value="<%=jsonObjBusinesses.get("id")%>">   
                 <input type="hidden" name="resultName" value="<%=jsonObjBusinesses.get("name")%>">
+                <input type="hidden" name="userID" value="<%=session.getAttribute("userID")%>"/>
+                <input type="hidden" name="groupID" value="<%=session.getAttribute("groupID")%>"/>
                 <input type="submit" name="btnShare" value="share"/>
             </form>
 
@@ -115,8 +140,10 @@
             <p><%=jsonObj.get("display_phone")%></p>
 
             <form id="frmShare" method="post" action="ShareServlet">
-                <input type="hidden" name="resultId" value="<%=jsonObj.get("id")%>">    
-                <input type="hidden" name="resultName" value="<%=jsonObj.get("name")%>">
+                <input type="hidden" name="resultId" value="<%=jsonObj.get("id")%>"/>    
+                <input type="hidden" name="resultName" value="<%=jsonObj.get("name")%>"/>
+                <input type="hidden" name="userID" value="<%=session.getAttribute("userID")%>"/>
+                <input type="hidden" name="groupID" value="<%=session.getAttribute("groupID")%>"/>
                 <input type="submit" name="btnShare" value="Share"/>
             </form>
 
