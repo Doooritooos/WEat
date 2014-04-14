@@ -1,9 +1,11 @@
 package edu.pitt.domain;
 
-import edu.pitt.utilities.DbUtilities;
+import edu.pitt.utilities.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 /**
  * Result class
@@ -15,8 +17,8 @@ public class Result {
     private String resultID;
     private String resultName;
     private String groupID;
-    private ArrayList<Integer> userIDList;
-    private ArrayList<Comment> commentList;
+    private Hashtable<Integer, User> userList = new Hashtable<Integer, User>();
+    private ArrayList<Comment> commentList = new ArrayList<Comment>();
 
     /**
      * Result constructor 1 : Retrieve data for provided resultID from MySQL
@@ -27,22 +29,27 @@ public class Result {
      */
     public Result(String resultID, String groupID) {
         String sql = "SELECT * FROM WEat.Result  ";
-        sql += "WHERE resultID = '" + resultID + "' AND groupID = '" + groupID + "' ; ";
+        sql += "WHERE resultID = '" + resultID + "' AND `groupID` = '" + groupID + "' ; ";
+        System.out.println("[Result(String resultID, String groupID)] sql = " + sql);
         DbUtilities db = new DbUtilities();
         try {
             ResultSet rs = db.getResultSet(sql);
             while (rs.next()) {
                 this.resultID = resultID;
-                this.resultName = resultName;
+                this.resultName = rs.getString("resultName");
                 this.groupID = groupID;
-                this.userIDList.add(Integer.parseInt(rs.getString("userID")));
+                int userID = Integer.parseInt(rs.getString("userID"));       
+                User user = new User(userID);
+                this.userList.put(userID, user);
+                System.out.println("[Result]userList = " + userList);         
             }
+            db.closeDbConnection();
         } catch (SQLException e) {
             System.out.println("Cannot construct Result with resultID");
             e.printStackTrace();
         }
-
         loadCommentList();
+        
     }
 
     /**
@@ -55,7 +62,7 @@ public class Result {
     public static void addResult(String resultName, int userID,  String groupID, String resultID) {
 
         String sql = "INSERT INTO WEat.Result ";
-        sql += "(resultName, userID,groupID,resultID) ";
+        sql += "(resultName, userID,`groupID`,resultID) ";
         sql += " VALUES ";
         sql += "('" + resultName + "', ";
         sql += userID + ", ";
@@ -64,6 +71,7 @@ public class Result {
 
         DbUtilities db = new DbUtilities();
         db.executeQuery(sql);
+        db.closeDbConnection();
     }
 
     /**
@@ -71,8 +79,8 @@ public class Result {
      */
     public void loadCommentList() {
         String sql = "SELECT * FROM  WEat.Comment ";
-        sql += " WHERE groupID = '" + this.groupID + "'";
-        sql += " AND resultID = '" + this.resultID + "' ; ";
+        sql += " WHERE resultID = '" + this.resultID + "' ; ";
+        System.out.println("[loadCommentList]sql = " + sql);
         DbUtilities db = new DbUtilities();
         try {
             ResultSet rs = db.getResultSet(sql);
@@ -82,16 +90,18 @@ public class Result {
                 Comment comment = new Comment(commentID);
                 // Add each account to customerList
                 commentList.add(comment);
-            }
+                System.out.println("[loadCommentList]commentList = " + commentList);
+            } 
+            db.closeDbConnection();
         } catch (SQLException e) {
             System.out.println("Cannot load result comments.");
             e.printStackTrace();
         }
     }
     
-    public ArrayList<Integer> getUserList()
+    public Hashtable<Integer, User> getUserList()
     {
-        return this.userIDList;
+        return this.userList;
     }
     
     public String getResultID()
@@ -113,24 +123,27 @@ public class Result {
         StringBuffer s = new StringBuffer();
         User user;
         int userID;
-        userID = userIDList.get(0);
-        // user = new findUser(userID);
-        // s.append(user.getUserName());
-        s.append(userID);
-        for(int i = 0; i < userIDList.size(); i ++)
+        //userID = userIDList.get(0);
+        Enumeration<Integer> userIDList = userList.keys();
+        user = userList.get(userIDList.nextElement());
+        s.append(user.getUserName());
+        while(userIDList.hasMoreElements())
         {
-           // userID = userIDList.get(i);
-          // user = new findUser(userID);
-          // s.append("," + user.getUserName());
-            s.append(", " + userID);
+          user = userList.get(userIDList.nextElement());
+            s.append(", " + user.getUserName());
         }
+        s.append("<br>");
         return new String(s);
     }
     
     public String commenListToString()
     {
         StringBuffer s = new StringBuffer();
-        s.append("Comments on " + resultName + "\n");
+        if(commentList.size() == 0)
+        {
+            return "";
+        }
+        s.append("Comments on " + resultName + ":<br>");
         for(Comment c : commentList )
         {
             s.append(c.toString());

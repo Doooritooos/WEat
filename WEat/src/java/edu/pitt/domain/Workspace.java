@@ -23,8 +23,8 @@ public class Workspace {
     
     public Workspace(int userID, String groupID)
     {
-        userID = this.userID;
-        groupID = this.groupID;
+        this.userID = userID;
+        this.groupID = groupID;
         loadGroupResults();
     }
 
@@ -35,7 +35,8 @@ public class Workspace {
      */
     public void loadGroupResults() {
         String sql = "SELECT * FROM  WEat.Result ";
-        sql += " WHERE groupID = " +  this.groupID + " ;";
+        sql += " WHERE `groupID` = '" +  this.groupID + "' ;";
+        System.out.println("[loadGroupResults]sql = " + sql);
         DbUtilities db = new DbUtilities();
         try {
             ResultSet rs = db.getResultSet(sql);
@@ -45,7 +46,9 @@ public class Workspace {
                 Result result = new Result(resultID, groupID);
                 // Add each account to customerList
                 resultList.put(resultID, result);
+                 System.out.println("[loadGroupResults]resultList = " + resultList);
             }
+            db.closeDbConnection();
         } catch (SQLException e) {
             System.out.println("Cannot load group results.");
             e.printStackTrace();
@@ -67,5 +70,15 @@ public class Workspace {
            resultIDList[i++] = resultsID.nextElement();
        }        
         return resultIDList;
+    }
+    
+    public String getGroupID()
+    {
+        return this.groupID;
+    }
+    
+      public int getUserID()
+    {
+        return this.userID;
     }
 }

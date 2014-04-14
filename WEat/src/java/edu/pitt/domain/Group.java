@@ -111,7 +111,7 @@ public class Group {
     }
 
     
-    public ArrayList<Group> getGroupList(int userID)
+    public ArrayList<Group> getGroupList()
     {
         ArrayList<Group> groupList =new ArrayList<Group>();
         String sql = "SELECT groupID FROM WEat.groups WHERE userID = '"
@@ -123,10 +123,8 @@ public class Group {
             {
                 Group group = new Group(userID, rs.getString("groupID"));
                 groupList.add(group);
-            
             }
         } catch (SQLException ex) {
-            // TODO Auto-generated catch block
             System.out.println("An Exception has occurred! " + ex);
         } finally {
             db.closeDbConnection();

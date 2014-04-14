@@ -12,7 +12,7 @@ public class Comment {
     private int commentID; 
     private String resultID;
     private int userID;
-    private String groupID;
+   // private String groupID;
     private String commentText;
     
      /**
@@ -24,6 +24,7 @@ public class Comment {
     public Comment(int commentID) {
         String sql = "SELECT * FROM WEat.Comment  ";
         sql += " WHERE commentID = " + commentID  + " ;" ;
+        System.out.println("[ResultComment(int commentID)] sql = " + sql);
         DbUtilities db = new DbUtilities();
         try {
             ResultSet rs = db.getResultSet(sql);
@@ -31,9 +32,10 @@ public class Comment {
                 this.commentID = Integer.parseInt(rs.getString("commentID"));
                 this.resultID = rs.getString("resultID");
                 this.userID = Integer.parseInt(rs.getString("userID"));
-                this.groupID = rs.getString("groupID");
+                //this.groupID = rs.getString("groupID");
                 this.commentText = rs.getString("commentText");
             }
+            db.closeDbConnection();
         } catch (SQLException e) {
             System.out.println("Cannot construct Comment with commentID");
             e.printStackTrace();
@@ -52,24 +54,27 @@ public class Comment {
     public Comment(String resultID, int userID, String groupID, String commentText) {
         this.resultID = resultID;
         this.userID = userID;
-        this.groupID = groupID;
+        //this.groupID = groupID;
         this.commentText = commentText;
 
         String sql = "INSERT INTO WEat.Comment ";
-        sql += " (resultID,userID,groupID,commentText) ";
+        sql += " (resultID,userID,commentText) ";
         sql += " VALUES ";
         sql += "('" + this.resultID + "', ";
         sql += this.userID + ", ";
-        sql += "'" + this.groupID + "', ";
+        //sql += "'" + this.groupID + "', ";
         sql += "'" + this.commentText + "');";
-
         DbUtilities db = new DbUtilities();
         db.executeQuery(sql);
+        db.closeDbConnection();
     }
     
     public String toString()
     {
-        String  s = userID + "said: " + commentText + "\n";
+//        User user = new User(userID);
+//        String userName = user.getUserName();
+       // String  s = userName + " said: " + commentText + "<br>";
+        String  s = userID + " said: " + commentText + "<br>";
         return s;
     } 
 }

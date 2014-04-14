@@ -29,20 +29,21 @@
 //    int userID = user.getUserID();
 //    Group group = (Group) session.getAttribute("currentSearchGroup");
 //    String groupID = (String) group.getGroupID();
-    String defaultResultID = null;
+   String defaultResultID = null;
    String selectedResultID = null;
     
     int userID = 1;
     String groupID = "77ID-8JIE";
+    myWorkspace = new Workspace(userID, groupID);
 
-    //chaching
-    if (session.getAttribute("myWorkspace") == null) {
-        myWorkspace = new Workspace(userID, groupID);
-        session.setAttribute("Workspace", myWorkspace);
-        //out.println("new");
-    } else {
-        myWorkspace = (Workspace) session.getAttribute("Workspace");
-    }
+//    //chaching
+//    if (session.getAttribute("myWorkspace") == null) {
+//        myWorkspace = new Workspace(userID, groupID);
+//        session.setAttribute("Workspace", myWorkspace);
+//        //out.println("new");
+//    } else {
+//        myWorkspace = (Workspace) session.getAttribute("Workspace");
+//    }
 
     //if Button addComment  is clicked
     if (request.getParameter("btnAddComment") != null && request.getParameter("txtComment") != null) {
