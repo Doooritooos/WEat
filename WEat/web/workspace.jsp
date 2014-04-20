@@ -30,21 +30,21 @@
     Group group = null;
     String groupID = null;
 
-    userID = 2;
-    groupID = "d9cb3258-df24-4eaa-ad51-e73c23765872";    
+//    userID = 2;
+//    groupID = "d9cb3258-df24-4eaa-ad51-e73c23765872";    
     
     //check if user is valid
-//    if (request.getParameter("userID") == null) {
-//        response.sendRedirect("login.jsp?error=Invalid user!");
-//    } else {
-//        userID = Integer.parseInt((String) request.getAttribute("userID"));
-//        user = new User(userID);
-//        if (user.isValid() == false) {
-//            response.sendRedirect("login.jsp?error=Invalid user!");
-//        }
-//    }
+    if (request.getParameter("userID") == null) {
+        response.sendRedirect("login.jsp?error=Invalid user!");
+    } else {
+        userID = Integer.parseInt((String) request.getParameter("userID"));
+        user = new User(userID);
+        if (user.isValid() == false) {
+            response.sendRedirect("login.jsp?error=Invalid user!");
+        }
+    }
 
-//    groupID = (String) request.getParameter("groupID");
+    groupID = (String) request.getParameter("groupID");
 
 
     group = new Group(userID, groupID);
@@ -64,9 +64,6 @@
         myWorkspace.getReultList().put(selectedResultID, updateResult);
     }
 %>
-
-
-
 
             <%            //sort resultList based on the number of user likes
                 //more users like a result, the higher a result ranks
@@ -103,6 +100,8 @@
             </button>
                 
                 <input type="hidden" name="selectedResultID" id="selectedResultID" value="<%=resultID%>">
+                <input type="hidden" name="userID" value="<%=userID%>">
+                <input type="hidden" name="groupID" value="<%=groupID%>">
             </form>
             </div>
           </div>
