@@ -30,7 +30,7 @@ public class User {
     private String password;
     private String username; 
     private String groupID;
-    private String groupname;
+    
     public boolean valid;
 
     DbUtilities db = new DbUtilities();
@@ -137,32 +137,6 @@ public class User {
         }
         
         
-        public User(int userID, String groupID) {
-        this.userID = userID;
-        this.groupID = groupID;
-
-        String sql = "SELECT * FROM WEat.groups WHERE groupID = '"
-                + this.groupID + "'AND userID="  + this.groupID + "'";
-        try {
-            rs = db.getResultSet(sql);
-            boolean userExists = rs.next();
-
-            if (!userExists) {
-                System.out.println("GroupID is Incorrect or User doesnot Exists.");
-                this.valid = false;
-            } else if (userExists) {
-//                this.userID = rs.getInt("userID");
-                this.username = rs.getString("username");
-                this.valid = true;
-            }
-        } catch (SQLException ex) {
-            // TODO Auto-generated catch block
-            System.out.println("Log In failed: An Exception has occurred! " + ex);
-        } finally {
-            db.closeDbConnection();
-        }
-        }
-        
 
     public String getEmail() {
         return email;
@@ -194,7 +168,7 @@ public class User {
            
             while(rs.next())
             {
-                User user = new User(Integer.parseInt(rs.getString("userID")),this.groupID);
+                User user = new User(Integer.parseInt(rs.getString("userID")));
                 userList.add(user);
             }
         } catch (SQLException ex) {
