@@ -24,8 +24,8 @@
 
     session.setAttribute("currentSessionUser", session.getAttribute("currentSessionUser"));
 
-    if (request.getParameter("share") != null) {
-        out.println("<script language='javascript'>alert('" + request.getParameter("share") + "')</script>");
+    if (request.getAttribute("share") != null) {
+        out.println("<script language='javascript'>alert('" + request.getAttribute("share") + "')</script>");
     }
 
     String userID = null;
