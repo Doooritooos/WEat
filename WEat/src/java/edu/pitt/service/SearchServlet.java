@@ -1,4 +1,4 @@
-    package edu.pitt.service;
+package edu.pitt.service;
 
 import com.temboo.Library.Yelp.SearchByCategory;
 import com.temboo.Library.Yelp.SearchByCategory.SearchByCategoryInputSet;
@@ -54,109 +54,121 @@ public class SearchServlet extends HttpServlet {
             HttpSession httpSession = request.getSession(true);
 
             if (request.getParameter("rdoSearchMethod").equals("SearchByBusinessName")) {
-                if (request.getParameter("txtBusinessName") != null && request.getParameter("txtCity") != null) {
-                    businessName = request.getParameter("txtBusinessName");
-                    city = request.getParameter("txtCity");
+                businessName = request.getParameter("txtBusinessName");
+                city = request.getParameter("txtCity");
 
-                    TembooSession session = new TembooSession("huw30", "yelp", "c7d5902f09284726982eeebebeb203ce");
-                    SearchForBusiness searchForBusinessChoreo = new SearchForBusiness(session);
+                TembooSession session = new TembooSession("huw30", "yelp", "c7d5902f09284726982eeebebeb203ce");
+                SearchForBusiness searchForBusinessChoreo = new SearchForBusiness(session);
 
-                    // Get an InputSet object for the choreo
-                    SearchForBusiness.SearchForBusinessInputSet searchForBusinessInputs = searchForBusinessChoreo.newInputSet();
+                // Get an InputSet object for the choreo
+                SearchForBusiness.SearchForBusinessInputSet searchForBusinessInputs = searchForBusinessChoreo.newInputSet();
 
-                    searchForBusinessInputs.setCredential("firstTryYelpAPI");
-                    // Set inputs
-                    searchForBusinessInputs.set_BusinessName(businessName);
-                    searchForBusinessInputs.set_City(city);
-
+                searchForBusinessInputs.setCredential("firstTryYelpAPI");
+                // Set inputs
+                searchForBusinessInputs.set_BusinessName(businessName);
+                searchForBusinessInputs.set_City(city);
+                try {
+                    System.out.println("*********" + "try");
                     // Execute Choreo
                     SearchForBusinessResultSet searchForBusinessResults = searchForBusinessChoreo.execute(searchForBusinessInputs);
+                    System.out.println("*********" + "try2");
+                    request.setAttribute("resultObj", searchForBusinessResults);
+                    request.setAttribute("result", "business");
+                    request.setAttribute("userID", userID);
+                    request.setAttribute("groupID", groupID);
+                    request.getRequestDispatcher("search.jsp").forward(request, response);
 
-                    httpSession.setAttribute("resultObj", searchForBusinessResults);
-                    httpSession.setAttribute("result", "business");
-                    httpSession.setAttribute("userID", userID);
-                    httpSession.setAttribute("groupID", groupID);
-                    response.sendRedirect("search.jsp");
-
-                } else {
-                    out.println("<script language = javascript> alert('Please fill out the business name and city!'); </script>");
+                } catch (Exception e) {
+                    System.out.println("*********" + "try3");
+                    request.setAttribute("error", "noresult");
+                    request.setAttribute("result", "business");
+                    request.setAttribute("userID", userID);
+                    request.setAttribute("groupID", groupID);
+                    request.getRequestDispatcher("search.jsp").forward(request, response);
                 }
-
             } else if (request.getParameter("rdoSearchMethod").equals("SearchByCategory")) {
-                if (request.getParameter("txtBusinessName") != null && request.getParameter("txtCity") != null) {
-                    category = request.getParameter("txtBusinessName");
-                    city = request.getParameter("txtCity");
 
-                    TembooSession session = new TembooSession("huw30", "yelp", "c7d5902f09284726982eeebebeb203ce");
-                    SearchByCategory searchByCategoryChoreo = new SearchByCategory(session);
+                category = request.getParameter("txtBusinessName");
+                city = request.getParameter("txtCity");
 
-                    SearchByCategoryInputSet searchByCategoryInputs = searchByCategoryChoreo.newInputSet();
+                TembooSession session = new TembooSession("huw30", "yelp", "c7d5902f09284726982eeebebeb203ce");
+                SearchByCategory searchByCategoryChoreo = new SearchByCategory(session);
 
-                    searchByCategoryInputs.setCredential("firstTryYelpAPI");
+                SearchByCategoryInputSet searchByCategoryInputs = searchByCategoryChoreo.newInputSet();
 
-                    searchByCategoryInputs.set_Category(category);
-                    searchByCategoryInputs.set_Location(city);
-                    searchByCategoryInputs.set_Count("20");
+                searchByCategoryInputs.setCredential("firstTryYelpAPI");
 
+                searchByCategoryInputs.set_Category(category);
+                searchByCategoryInputs.set_Location(city);
+                searchByCategoryInputs.set_Count("20");
+                try {
                     SearchByCategoryResultSet searchByCategoryResults = searchByCategoryChoreo.execute(searchByCategoryInputs);
-                    httpSession.setAttribute("resultObj", searchByCategoryResults);
-                    httpSession.setAttribute("result", "category");
-                    httpSession.setAttribute("userID", userID);
-                    httpSession.setAttribute("groupID", groupID);
-                    response.sendRedirect("search.jsp");
-
-                } else {
-                    out.println("<script language = javascript> alert('Please fill out the category and location!'); </script>");
+                    request.setAttribute("resultObj", searchByCategoryResults);
+                    request.setAttribute("result", "category");
+                    request.setAttribute("userID", userID);
+                    request.setAttribute("groupID", groupID);
+                    request.getRequestDispatcher("search.jsp").forward(request, response);
+                } catch (Exception e) {
+                    request.setAttribute("error", "noresult");
+                    request.setAttribute("result", "category");
+                    request.setAttribute("userID", userID);
+                    request.setAttribute("groupID", groupID);
+                    request.getRequestDispatcher("search.jsp").forward(request, response);
                 }
             } else if (request.getParameter("rdoSearchMethod").equals("SearchByCity")) {
-                if (request.getParameter("txtCity") != null) {
-                    city = request.getParameter("txtCity");
 
-                    TembooSession session = new TembooSession("huw30", "yelp", "c7d5902f09284726982eeebebeb203ce");
-                    SearchByCity searchByCityChoreo = new SearchByCity(session);
+                city = request.getParameter("txtCity");
 
-                    SearchByCityInputSet searchByCityInputs = searchByCityChoreo.newInputSet();
+                TembooSession session = new TembooSession("huw30", "yelp", "c7d5902f09284726982eeebebeb203ce");
+                SearchByCity searchByCityChoreo = new SearchByCity(session);
 
-                    searchByCityInputs.setCredential("firstTryYelpAPI");
+                SearchByCityInputSet searchByCityInputs = searchByCityChoreo.newInputSet();
 
-                    searchByCityInputs.set_City(city);
-                    searchByCityInputs.set_Count("20");
+                searchByCityInputs.setCredential("firstTryYelpAPI");
 
+                searchByCityInputs.set_City(city);
+                searchByCityInputs.set_Count("20");
+                try {
                     SearchByCityResultSet searchByCityResults = searchByCityChoreo.execute(searchByCityInputs);
-                    httpSession.setAttribute("resultObj", searchByCityResults);
-                    httpSession.setAttribute("result", "city");
-                    httpSession.setAttribute("userID", userID);
-                    httpSession.setAttribute("groupID", groupID);
-                    response.sendRedirect("search.jsp");
-
-                } else {
-                    out.println("<script language = javascript> alert('Please fill out the city!'); </script>");
+                    request.setAttribute("resultObj", searchByCityResults);
+                    request.setAttribute("result", "city");
+                    request.setAttribute("userID", userID);
+                    request.setAttribute("groupID", groupID);
+                    request.getRequestDispatcher("search.jsp").forward(request, response);
+                } catch (Exception e) {
+                    request.setAttribute("error", "noresult");
+                    request.setAttribute("result", "city");
+                    request.setAttribute("userID", userID);
+                    request.setAttribute("groupID", groupID);
+                    request.getRequestDispatcher("search.jsp").forward(request, response);
                 }
             } else if (request.getParameter("rdoSearchMethod").equals("SearchByNeighborhood")) {
-                if (request.getParameter("txtCity") != null) {
-                    neighborhood = request.getParameter("txtCity");
 
-                    TembooSession session = new TembooSession("huw30", "yelp", "c7d5902f09284726982eeebebeb203ce");
-                    SearchByNeighborhood searchByNeighborhoodChoreo = new SearchByNeighborhood(session);
+                neighborhood = request.getParameter("txtCity");
 
-                    SearchByNeighborhoodInputSet searchByNeighborhoodInputs = searchByNeighborhoodChoreo.newInputSet();
+                TembooSession session = new TembooSession("huw30", "yelp", "c7d5902f09284726982eeebebeb203ce");
+                SearchByNeighborhood searchByNeighborhoodChoreo = new SearchByNeighborhood(session);
 
-                    searchByNeighborhoodInputs.setCredential("firstTryYelpAPI");
+                SearchByNeighborhoodInputSet searchByNeighborhoodInputs = searchByNeighborhoodChoreo.newInputSet();
 
-                    searchByNeighborhoodInputs.set_Neighborhood("pittsburgh");
-                    searchByNeighborhoodInputs.set_Count("20");
+                searchByNeighborhoodInputs.setCredential("firstTryYelpAPI");
 
+                searchByNeighborhoodInputs.set_Neighborhood("pittsburgh");
+                searchByNeighborhoodInputs.set_Count("20");
+                try {
                     SearchByNeighborhoodResultSet searchByNeighborhoodResults = searchByNeighborhoodChoreo.execute(searchByNeighborhoodInputs);
-                    httpSession.setAttribute("resultObj", searchByNeighborhoodResults);
-                    httpSession.setAttribute("result", "neighborhood");
-                    httpSession.setAttribute("userID", userID);
-                    httpSession.setAttribute("groupID", groupID);
-                    response.sendRedirect("search.jsp");
-
-                } else {
-                    out.println("<script language = javascript> alert('Please fill out the city!'); </script>");
+                    request.setAttribute("resultObj", searchByNeighborhoodResults);
+                    request.setAttribute("result", "neighborhood");
+                    request.setAttribute("userID", userID);
+                    request.setAttribute("groupID", groupID);
+                    request.getRequestDispatcher("search.jsp").forward(request, response);
+                } catch (Exception e) {
+                    request.setAttribute("error", "noresult");
+                    request.setAttribute("result", "neighborhood");
+                    request.setAttribute("userID", userID);
+                    request.setAttribute("groupID", groupID);
+                    request.getRequestDispatcher("search.jsp").forward(request, response);
                 }
-
             }
 
         }

@@ -21,27 +21,22 @@
     if (session.getAttribute("currentSessionUser") == null) {
         response.sendRedirect("index.jsp");
     }
-    
+
     session.setAttribute("currentSessionUser", session.getAttribute("currentSessionUser"));
-    
+
     if (request.getParameter("share") != null) {
         out.println("<script language='javascript'>alert('" + request.getParameter("share") + "')</script>");
     }
 
     String userID = null;
     String groupID = null;
-    if (request.getParameter("getUserID") != null && request.getParameter("getGroupID") != null) {
-        userID = request.getParameter("getUserID");
-        groupID = request.getParameter("getGroupID");
+    if (request.getParameter("userID") != null && request.getParameter("groupID") != null) {
+        userID = request.getParameter("userID");
+        groupID = request.getParameter("groupID");
+    }else{
+       userID=(String) request.getAttribute("userID");
+       groupID =(String) request.getAttribute("groupID");
     }
-    if (session.getAttribute("userID") == null && session.getAttribute("groupID") == null) {
-        session.setAttribute("userID", userID);
-        session.setAttribute("groupID", groupID);
-    } else {
-        session.getAttribute("userID");
-        session.getAttribute("groupID");
-    }
-
 
 %>
 <html>
@@ -51,7 +46,12 @@
         <title>Search</title>
     </head>
     <body>
-        <a href="workspace.jsp">Go to Workspace</a>
+        <form action="workspace.jsp" method="post">
+        <input type="hidden" name="userID" value="<%=userID%>"/>
+        <input type="hidden" name="groupID" value="<%=groupID%>"/>
+        <input type="submit" value="Go to workspace">
+        </form>
+        
         <form id="frmSearch" method="get" action="SearchServlet" onsubmit="return validateForm()">
             <input type="text" id="txtBusinessName" name="txtBusinessName">
             <br>
@@ -70,27 +70,27 @@
         <%  String result = null;
             JSONObject jsonObj = null;
             JSONParser parser = new JSONParser();
-
-            if (session.getAttribute("resultObj") != null) {
-                if (session.getAttribute("result").equals("business")) {
-                    SearchForBusinessResultSet resultObj = (SearchForBusinessResultSet) session.getAttribute("resultObj");
-                    result = resultObj.get_Response();
-                } else if (session.getAttribute("result").equals("category")) {
-                    SearchByCategoryResultSet resultObj = (SearchByCategoryResultSet) session.getAttribute("resultObj");
-                    result = resultObj.get_Response();
-                } else if (session.getAttribute("result").equals("city")) {
-                    SearchByCityResultSet resultObj = (SearchByCityResultSet) session.getAttribute("resultObj");
-                    result = resultObj.get_Response();
-                } else {
-                    SearchByNeighborhoodResultSet resultObj = (SearchByNeighborhoodResultSet) session.getAttribute("resultObj");
-                    result = resultObj.get_Response();
-                }
-                jsonObj = (JSONObject) parser.parse(result);
-                if (jsonObj.containsKey("businesses")) {
-                    JSONArray businesses = (JSONArray) jsonObj.get("businesses");
-                    Iterator<String> iterator = businesses.iterator();
-                    while (iterator.hasNext()) {
-                        JSONObject jsonObjBusinesses = (JSONObject) parser.parse(String.valueOf(iterator.next()));
+            if (request.getAttribute("error") == null) {
+                if (request.getAttribute("resultObj") != null) {
+                    if (request.getAttribute("result").equals("business")) {
+                        SearchForBusinessResultSet resultObj = (SearchForBusinessResultSet) request.getAttribute("resultObj");
+                        result = resultObj.get_Response();
+                    } else if (request.getAttribute("result").equals("category")) {
+                        SearchByCategoryResultSet resultObj = (SearchByCategoryResultSet) request.getAttribute("resultObj");
+                        result = resultObj.get_Response();
+                    } else if (request.getAttribute("result").equals("city")) {
+                        SearchByCityResultSet resultObj = (SearchByCityResultSet) request.getAttribute("resultObj");
+                        result = resultObj.get_Response();
+                    } else {
+                        SearchByNeighborhoodResultSet resultObj = (SearchByNeighborhoodResultSet) request.getAttribute("resultObj");
+                        result = resultObj.get_Response();
+                    }
+                    jsonObj = (JSONObject) parser.parse(result);
+                    if (jsonObj.containsKey("businesses")) {
+                        JSONArray businesses = (JSONArray) jsonObj.get("businesses");
+                        Iterator<String> iterator = businesses.iterator();
+                        while (iterator.hasNext()) {
+                            JSONObject jsonObjBusinesses = (JSONObject) parser.parse(String.valueOf(iterator.next()));
         %>
         <br/>
         <br/>
@@ -112,8 +112,8 @@
             <form id="frmShare" method="post" action="ShareServlet">
                 <input type="hidden" name="resultId" value="<%=jsonObjBusinesses.get("id")%>">   
                 <input type="hidden" name="resultName" value="<%=jsonObjBusinesses.get("name")%>">
-                <input type="hidden" name="userID" value="<%=session.getAttribute("userID")%>"/>
-                <input type="hidden" name="groupID" value="<%=session.getAttribute("groupID")%>"/>
+                <input type="hidden" name="userID" value="<%=request.getAttribute("userID")%>"/>
+                <input type="hidden" name="groupID" value="<%=request.getAttribute("groupID")%>"/>
                 <input type="submit" name="btnShare" value="share"/>
             </form>
 
@@ -143,12 +143,22 @@
             <form id="frmShare" method="post" action="ShareServlet">
                 <input type="hidden" name="resultId" value="<%=jsonObj.get("id")%>"/>    
                 <input type="hidden" name="resultName" value="<%=jsonObj.get("name")%>"/>
-                <input type="hidden" name="userID" value="<%=session.getAttribute("userID")%>"/>
-                <input type="hidden" name="groupID" value="<%=session.getAttribute("groupID")%>"/>
+                <input type="hidden" name="userID" value="<%=request.getAttribute("userID")%>"/>
+                <input type="hidden" name="groupID" value="<%=request.getAttribute("groupID")%>"/>
                 <input type="submit" name="btnShare" value="Share"/>
             </form>
 
         </div>  
+        <%
+            }
+        }
+        } else {
+            if (request.getAttribute("error").equals("noresult")) {
+        %>
+        <div>
+            <p>No result. Please refine your search.</p>
+        </div>
+
         <%
                 }
             }
