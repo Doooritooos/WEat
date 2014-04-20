@@ -11,6 +11,17 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Workspace Page</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/signin.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+
 <%
 
     Workspace myWorkspace;
@@ -19,29 +30,28 @@
     Group group = null;
     String groupID = null;
 
+    userID = 2;
+    groupID = "d9cb3258-df24-4eaa-ad51-e73c23765872";    
+    
     //check if user is valid
-    if (session.getAttribute("userID") == null) {
-        response.sendRedirect("login.jsp?error=Invalid user!");
-    } else {
-        userID = Integer.parseInt((String) session.getAttribute("userID"));
-        user = new User(userID);
-        if (user.isValid() == false) {
-            response.sendRedirect("login.jsp?error=Invalid user!");
-        }
-    }
+//    if (request.getParameter("userID") == null) {
+//        response.sendRedirect("login.jsp?error=Invalid user!");
+//    } else {
+//        userID = Integer.parseInt((String) request.getAttribute("userID"));
+//        user = new User(userID);
+//        if (user.isValid() == false) {
+//            response.sendRedirect("login.jsp?error=Invalid user!");
+//        }
+//    }
 
-    groupID = (String) session.getAttribute("groupID");
+//    groupID = (String) request.getParameter("groupID");
 
-//    userID = 2;
-//    groupID = "77ID-8JIE";
+
     group = new Group(userID, groupID);
     myWorkspace = new Workspace(userID, groupID);
-//    out.println("My workspace: userID = " + myWorkspace.getUserID() + ", groupID = " + myWorkspace.getGroupID() + ", resultList = " + myWorkspace.getReultList() + "<br><br>");
+    out.println("My workspace: userID = " + myWorkspace.getUserID() + ", groupID = " + myWorkspace.getGroupID() + ", resultList = " + myWorkspace.getReultList() + "<br><br>");
 
-    if (myWorkspace.getReultList().size() == 0) {
-        response.sendRedirect("search.jsp");
-    }
-
+    if (myWorkspace.getReultList().size() != 0) {
     //if Button addComment  is clicked
     if (request.getParameter("btnAddComment") != null && request.getParameter("txtComment") != null && request.getParameter("selectedResultID") != null) {
         String txtComment = request.getParameter("txtComment");
@@ -53,20 +63,10 @@
         Result updateResult = new Result(selectedResultID, groupID);
         myWorkspace.getReultList().put(selectedResultID, updateResult);
     }
-
 %>
 
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Workspace Page</title>
-        <link href="css/bootstrap.css" rel="stylesheet">
-        <link href="css/signin.css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="container">
+
 
             <%            //sort resultList based on the number of user likes
                 //more users like a result, the higher a result ranks
@@ -97,11 +97,10 @@
                     String resultID = results.get(i).getResultID();
             %>
             <form id="formComment" name= "formComment" method="post" action="workspace.jsp">
-                 <input type="text" name="txtComment" id="txtComment"  class="form-control"  placeholder="Add comment..." required autofocus value=""/>
+                 <input type="text" name="txtComment" id="txtComment"  placeholder="Add comment..." required autofocus value=""/>
                 <button type="submit" class="btn btn-primary" name="btnAddComment" id="btnAddComment" value = "Add">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
-                  <!--                <input type="submit" name="btnAddComment" id="btnAddComment" value = "Add"><br>-->
                 
                 <input type="hidden" name="selectedResultID" id="selectedResultID" value="<%=resultID%>">
             </form>
@@ -109,19 +108,23 @@
           </div>
 
             <%
- //                   out.println("<p>--------------------------------------------------------</p>");
                 }
-
+            }else
+    {
+        %>
+        <h1>Workspace of <%=group.getGroupName() %></h1>
+        This group have not share anything yet.
+        
+        <%
+    }
             %> 
 
 
-            <!--        <input type="text" name="txtComment" id="txtComment" value=""/>
-                    <input type="submit" name="btnAddComment" id="btnAddComment" value = "Add"><br>
-                </form>-->
             <form name="search" action="search.jsp">   
-                <input type="submit" value="Back to Search">
+                <input type="hidden" name="userID" value="<%=userID%>">
+                <input type="hidden" name="groupID" value="<%=groupID%>">
+                <input type="submit" name="btnSearch" value="Back to Search">
             </form>
-            
         </div>
     </body>
 </html>

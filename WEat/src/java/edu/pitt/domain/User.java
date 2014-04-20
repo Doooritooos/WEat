@@ -35,10 +35,10 @@ public class User {
 
     DbUtilities db = new DbUtilities();
     ResultSet rs;
-    
-     public User(int userID) {
+
+    public User(int userID) {
         this.userID = userID;
-        
+
         String sql = "SELECT * FROM WEat.user WHERE userID = '"
                 + this.userID + "'";
         try {
