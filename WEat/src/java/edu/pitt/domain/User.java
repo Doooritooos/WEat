@@ -21,13 +21,16 @@ package edu.pitt.domain;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import edu.pitt.utilities.*;
+import java.util.ArrayList;
 
 public class User {
 
     private int userID;
     private String email;
     private String password;
-    private String username;
+    private String username; 
+    private String groupID;
+    private String groupname;
     public boolean valid;
 
     DbUtilities db = new DbUtilities();
@@ -101,12 +104,13 @@ public class User {
         }
     }
     
-        public User(String email) {
+        public User(String email,int userID) {
         this.email = email;
+        this.userID=userID;
    
 
         String sql = "SELECT * FROM WEat.user WHERE email = '"
-                + this.email  + "'";
+                + this.email  + "' AND userID=" + this.userID  + "'";
         try {
             rs = db.getResultSet(sql);
             boolean userExists = rs.next();
@@ -127,6 +131,38 @@ public class User {
         }
 
     }
+        
+        public User(String groupID) {
+        this.groupID = groupID;
+        }
+        
+        
+        public User(int userID, String groupID) {
+        this.userID = userID;
+        this.groupID = groupID;
+
+        String sql = "SELECT * FROM WEat.groups WHERE groupID = '"
+                + this.groupID + "'AND userID="  + this.groupID + "'";
+        try {
+            rs = db.getResultSet(sql);
+            boolean userExists = rs.next();
+
+            if (!userExists) {
+                System.out.println("GroupID is Incorrect or User doesnot Exists.");
+                this.valid = false;
+            } else if (userExists) {
+//                this.userID = rs.getInt("userID");
+                this.username = rs.getString("username");
+                this.valid = true;
+            }
+        } catch (SQLException ex) {
+            // TODO Auto-generated catch block
+            System.out.println("Log In failed: An Exception has occurred! " + ex);
+        } finally {
+            db.closeDbConnection();
+        }
+        }
+        
 
     public String getEmail() {
         return email;
@@ -148,6 +184,26 @@ public class User {
         return valid;
     }
     
+    public ArrayList<User> getUserList()
+    {
+        ArrayList<User> userList =new ArrayList<User>();
+        String sql = "SELECT userID FROM WEat.groups WHERE groupID = '"
+                + this.groupID + "'";
+        try {
+            rs = db.getResultSet(sql);
+           
+            while(rs.next())
+            {
+                User user = new User(Integer.parseInt(rs.getString("userID")),this.groupID);
+                userList.add(user);
+            }
+        } catch (SQLException ex) {
+            System.out.println("An Exception has occurred! " + ex);
+        } finally {
+            db.closeDbConnection();
+        }
+        return userList;
+    }
 
 
 }

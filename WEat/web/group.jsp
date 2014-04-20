@@ -34,7 +34,13 @@
             document.getElementById("form1").action="addMember.jsp";
             document.getElementById("form1").submit(); 
 //            form1.submit; 
-        }       
+        }  
+        
+        function memberList() {  
+            document.getElementById("form1").action="memberList.jsp";
+            document.getElementById("form1").submit(); 
+//            form1.submit; 
+        }  
         
         </script>  
         
@@ -82,17 +88,17 @@
                     
                    
                         <li class="list-group-item"><%=g.getGroupName()%></li>
-                        <input type="hidden" name="getGroupID" value="<%=g.getGroupID()%>"/>
+                        <input type="hidden" name="groupID" value="<%=g.getGroupID()%>"/>
                         <%
                         System.out.println(g.getGroupName());
                         %>
-                        <input type="hidden" name="getUserID" value="<%=currentUserID%>"/>
+                        <input type="hidden" name="userID" value="<%=currentUserID%>"/>
 <!--                        <button class="btn btn-lg btn-primary btn-block" type="submit" value="search.jsp">Search</button>
                         <button class="btn btn-lg btn-primary btn-block" type="submit" value="addMember.jsp">Add Member</button>-->
                         
                         <input class="btn btn-lg btn-primary btn-block" name="bt1" type="button" value="Search" onclick="search()"/>
                         <input class="btn btn-lg btn-primary btn-block" name="bt2" type="button" value="Add Member" onclick="addMember()" />
-                       
+                        <input class="btn btn-lg btn-primary btn-block" name="bt3" type="button" value="Member List" onclick="memberList()" />
                         
                     </form>
                     <%

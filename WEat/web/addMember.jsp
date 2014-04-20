@@ -13,7 +13,7 @@
 <html>
 <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add Group</title>
+        <title>Add Member</title>
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/signin.css" rel="stylesheet">
     </head>
@@ -34,10 +34,10 @@
                     </center>
                     <form class="form-login" action="AddMember" method ="POST">
                     <% int userID = 0;
-                       String groupID = null;
-                       if (request.getParameter("getUserID") != null && request.getParameter("getGroupID") != null) {
-                           userID = Integer.parseInt(request.getParameter("getUserID"));
-                           groupID = request.getParameter("getGroupID");
+                       String groupID = "";
+                       if (request.getParameter("userID") != null && request.getParameter("groupID") != null) {
+                           userID = Integer.parseInt(request.getParameter("userID"));
+                           groupID = request.getParameter("groupID");
                            System.out.println(groupID);
                            Group curGroup= new Group(userID,groupID);
                            
