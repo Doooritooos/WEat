@@ -49,13 +49,17 @@ public class ShareServlet extends HttpServlet {
                 DbUtilities db = new DbUtilities();
 
                 if (db.executeUpdate(sql)) {
-                    db.closeDbConnection();
-                    response.sendRedirect("search.jsp?share=Shared Successfully!");
+                   request.setAttribute("userID", userID);
+                    request.setAttribute("groupID", groupID);
+                    request.setAttribute("share", "Shared successfully");
+                    request.getRequestDispatcher("search.jsp").forward(request, response);
 
                 } else {
                     db.closeDbConnection();
-                    response.sendRedirect("search.jsp?share=You have already shared this result");
-
+                    request.setAttribute("userID", userID);
+                    request.setAttribute("groupID", groupID);
+                    request.setAttribute("share", "You have already shared this result");
+                    request.getRequestDispatcher("search.jsp").forward(request, response);
                 }
 
             } else {
