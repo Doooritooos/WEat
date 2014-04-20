@@ -11,6 +11,17 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Workspace Page</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/signin.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+
 <%
 
     Workspace myWorkspace;
@@ -55,16 +66,7 @@
 %>
 
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Workspace Page</title>
-        <link href="css/bootstrap.css" rel="stylesheet">
-        <link href="css/signin.css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="container">
+
 
             <%            //sort resultList based on the number of user likes
                 //more users like a result, the higher a result ranks
@@ -123,7 +125,6 @@
                 <input type="hidden" name="groupID" value="<%=groupID%>">
                 <input type="submit" name="btnSearch" value="Back to Search">
             </form>
-            
         </div>
     </body>
 </html>
