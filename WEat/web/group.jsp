@@ -76,7 +76,7 @@
                         <h1><%=curUserName%>,<small>&nbsp Your Groups</small></h1>
                         
                     </div>
-                    <form class="form-login" action="" method ="POST" id="form1">   
+                   
                     <%   
                         if (groupList.size() > 0) {
                             for (int i = 0; i < groupList.size(); i++) {
@@ -86,21 +86,35 @@
 
                     <br>
                     
-                   
-                        <li class="list-group-item"><%=g.getGroupName()%></li>
-                        <input type="hidden" name="groupID" value="<%=g.getGroupID()%>"/>
-                        <%
-                        System.out.println(g.getGroupName());
-                        %>
-                        <input type="hidden" name="userID" value="<%=currentUserID%>"/>
-<!--                        <button class="btn btn-lg btn-primary btn-block" type="submit" value="search.jsp">Search</button>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit" value="addMember.jsp">Add Member</button>-->
                         
-                        <input class="btn btn-lg btn-primary btn-block" name="bt1" type="button" value="Search" onclick="search()"/>
+                        <li class="list-group-item"><%=g.getGroupName()%></li>
+                       
+                        <form class="form-login" action="search.jsp" method ="POST"> 
+                        <input type="hidden" name="groupID" value="<%=g.getGroupID()%>"/>    
+                        <input type="hidden" name="userID" value="<%=currentUserID%>"/>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+                        </form>
+                        
+                        <form class="form-login" action="addMember.jsp" method ="POST"> 
+                        <input type="hidden" name="groupID" value="<%=g.getGroupID()%>"/>    
+                        <input type="hidden" name="userID" value="<%=currentUserID%>"/>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Add Member</button>
+                        </form>
+                        
+                        <form class="form-login" action="memberList.jsp" method ="POST"> 
+                        <input type="hidden" name="groupID" value="<%=g.getGroupID()%>"/>    
+                        <input type="hidden" name="userID" value="<%=currentUserID%>"/>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Member List</button>
+                        </form>
+                        
+                        
+                      
+                        
+<!--                        <input class="btn btn-lg btn-primary btn-block" name="bt1" type="button" value="Search" onclick="search()"/>
                         <input class="btn btn-lg btn-primary btn-block" name="bt2" type="button" value="Add Member" onclick="addMember()" />
                         <input class="btn btn-lg btn-primary btn-block" name="bt3" type="button" value="Member List" onclick="memberList()" />
-                        
-                    </form>
+                        </form>-->
+                    
                     <%
                        System.out.println(g.getGroupName());
                             }
