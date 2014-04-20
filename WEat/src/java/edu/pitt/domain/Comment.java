@@ -12,7 +12,7 @@ public class Comment {
     private int commentID; 
     private String resultID;
     private int userID;
-   // private String groupID;
+    private String groupID;
     private String commentText;
     
      /**
@@ -21,10 +21,11 @@ public class Comment {
      * properties of the Comment object.
      * @param commentID
      */
-    public Comment(int commentID) {
+    public Comment(int commentID, String groupID) {
         String sql = "SELECT * FROM WEat.Comment  ";
-        sql += " WHERE commentID = " + commentID  + " ;" ;
-        System.out.println("[ResultComment(int commentID)] sql = " + sql);
+        sql += " WHERE commentID = " + commentID ;
+        sql += " AND groupID = '" + groupID + "' ;" ;
+        System.out.println("[GetResultComment(int commentID, String groupID)] sql = " + sql);
         DbUtilities db = new DbUtilities();
         try {
             ResultSet rs = db.getResultSet(sql);
@@ -32,7 +33,7 @@ public class Comment {
                 this.commentID = Integer.parseInt(rs.getString("commentID"));
                 this.resultID = rs.getString("resultID");
                 this.userID = Integer.parseInt(rs.getString("userID"));
-                //this.groupID = rs.getString("groupID");
+                this.groupID = rs.getString("groupID");
                 this.commentText = rs.getString("commentText");
             }
             db.closeDbConnection();
@@ -54,14 +55,15 @@ public class Comment {
     public Comment(String resultID, int userID, String groupID, String commentText) {
         this.resultID = resultID;
         this.userID = userID;
-        //this.groupID = groupID;
+        this.groupID = groupID;
         this.commentText = commentText;
 
         String sql = "INSERT INTO WEat.Comment ";
-        sql += " (resultID,userID,commentText) ";
+        sql += " (resultID, userID, groupID, commentText) ";
         sql += " VALUES ";
         sql += "('" + this.resultID + "', ";
         sql += this.userID + ", ";
+        sql += "'" + this.groupID + "', ";
         sql += "'" + this.commentText + "');";
         System.out.println("[Comment(String resultID, int userID, String groupID, String commentText)]sql = " + sql );
         DbUtilities db = new DbUtilities();
@@ -74,6 +76,11 @@ public class Comment {
         return userID;
     }
     
+    public String getGroupID()
+    {
+        return groupID;
+    }
+              
     public String getCommentText()
     {
         return commentText;

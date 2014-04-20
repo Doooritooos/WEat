@@ -79,7 +79,8 @@ public class Result {
      */
     public void loadCommentList() {
         String sql = "SELECT * FROM  WEat.Comment ";
-        sql += " WHERE resultID = '" + this.resultID + "' ; ";
+        sql += " WHERE resultID = '" + this.resultID + "' ";
+        sql += " AND groupID = '"  + this.groupID  +  "' ; ";
         System.out.println("[loadCommentList]sql = " + sql);
         DbUtilities db = new DbUtilities();
         try {
@@ -87,7 +88,7 @@ public class Result {
             while (rs.next()) {
                 int commentID = Integer.parseInt(rs.getString("commentID"));
                 // Create Result  object here for each commentID
-                Comment comment = new Comment(commentID);
+                Comment comment = new Comment(commentID, groupID);
                 // Add each account to customerList
                 commentList.add(comment);
                 System.out.println("[loadCommentList]commentList = " + commentList);
@@ -143,12 +144,19 @@ public class Result {
         {
             return "";
         }
-        //s.append("Comments on " + resultName + ":<br>");
         for(Comment c : commentList )
         {
-            User user = new User(c.getUserID());
-            String userName = user.getUserName();
-            //String userName = userList.get(c.getUserID()).getUserName();
+           String userName = "";
+           //if a user in the userList
+            if(userList.containsKey(c.getUserID()))
+            {
+                userName = userList.get(c.getUserID()).getUserName();
+            }
+            else//if not a user in the userList, retrieve username from database(WEat.user table)
+            {
+                 User user = new User(c.getUserID());
+                 userName = user.getUserName();
+            }
             s.append(userName + " : " + c.getCommentText() + "<br>");
         }
         return new String(s);

@@ -32,10 +32,10 @@ public class User {
 
     DbUtilities db = new DbUtilities();
     ResultSet rs;
-    
-     public User(int userID) {
+
+    public User(int userID) {
         this.userID = userID;
-        
+
         String sql = "SELECT * FROM WEat.user WHERE userID = '"
                 + this.userID + "'";
         try {
@@ -100,13 +100,12 @@ public class User {
             db.executeUpdate(sql);
         }
     }
-    
-        public User(String email) {
+
+    public User(String email) {
         this.email = email;
-   
 
         String sql = "SELECT * FROM WEat.user WHERE email = '"
-                + this.email  + "'";
+                + this.email + "'";
         try {
             rs = db.getResultSet(sql);
             boolean userExists = rs.next();
@@ -147,7 +146,5 @@ public class User {
     public boolean isValid() {
         return valid;
     }
-    
-
 
 }
