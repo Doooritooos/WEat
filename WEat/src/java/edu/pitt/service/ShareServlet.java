@@ -5,6 +5,10 @@
  */
 package edu.pitt.service;
 
+import com.temboo.Library.Yelp.SearchByCategory.SearchByCategoryResultSet;
+import com.temboo.Library.Yelp.SearchByCity.SearchByCityResultSet;
+import com.temboo.Library.Yelp.SearchByNeighborhood.SearchByNeighborhoodResultSet;
+import com.temboo.Library.Yelp.SearchForBusiness.SearchForBusinessResultSet;
 import edu.pitt.utilities.DbUtilities;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,6 +25,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ShareServlet", urlPatterns = {"/ShareServlet"})
 public class ShareServlet extends HttpServlet {
+
+    private String result;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,22 +50,98 @@ public class ShareServlet extends HttpServlet {
                 String userID = request.getParameter("userID");
                 String groupID = request.getParameter("groupID");
 
-                String sql = "INSERT INTO result (resultID,resultName,userID,`groupID`) values ('" + id + "','" + name + "'," + userID + ",'" + groupID + "');";
-                System.out.println(sql);
-                DbUtilities db = new DbUtilities();
+                if (request.getParameter("result").equals("business")) {
+                    SearchForBusinessResultSet resultObj = (SearchForBusinessResultSet) session.getAttribute("resultObj");
+                    String sql = "INSERT INTO result (resultID,resultName,userID,`groupID`) values ('" + id + "','" + name + "'," + userID + ",'" + groupID + "');";
+                    System.out.println(sql);
+                    DbUtilities db = new DbUtilities();
+            
+                    if (db.executeUpdate(sql)) {
+                        request.setAttribute("userID", userID);
+                        request.setAttribute("groupID", groupID);
+                        request.setAttribute("result", request.getParameter("result"));
+                        request.setAttribute("resultObj", resultObj);
+                        request.setAttribute("share", "Shared successfully");
+                        request.getRequestDispatcher("search.jsp").forward(request, response);
 
-                if (db.executeUpdate(sql)) {
-                   request.setAttribute("userID", userID);
-                    request.setAttribute("groupID", groupID);
-                    request.setAttribute("share", "Shared successfully");
-                    request.getRequestDispatcher("search.jsp").forward(request, response);
+                    } else {
+                        db.closeDbConnection();
+                        request.setAttribute("userID", userID);
+                        request.setAttribute("groupID", groupID);
+                        request.setAttribute("result", request.getParameter("result"));
+                        request.setAttribute("resultObj", resultObj);
+                        request.setAttribute("share", "You have already shared this result");
+                        request.getRequestDispatcher("search.jsp").forward(request, response);
+                    }
+                } else if (request.getParameter("result").equals("category")) {
+                    SearchByCategoryResultSet resultObj = (SearchByCategoryResultSet) session.getAttribute("resultObj");
+                    String sql = "INSERT INTO result (resultID,resultName,userID,`groupID`) values ('" + id + "','" + name + "'," + userID + ",'" + groupID + "');";
+                    System.out.println(sql);
+                    DbUtilities db = new DbUtilities();
 
+                    if (db.executeUpdate(sql)) {
+                        request.setAttribute("userID", userID);
+                        request.setAttribute("groupID", groupID);
+                        request.setAttribute("result", request.getParameter("result"));
+                        request.setAttribute("resultObj", resultObj);
+                        request.setAttribute("share", "Shared successfully");
+                        request.getRequestDispatcher("search.jsp").forward(request, response);
+
+                    } else {
+                        db.closeDbConnection();
+                        request.setAttribute("userID", userID);
+                        request.setAttribute("groupID", groupID);
+                        request.setAttribute("result", request.getParameter("result"));
+                        request.setAttribute("resultObj", resultObj);
+                        request.setAttribute("share", "You have already shared this result");
+                        request.getRequestDispatcher("search.jsp").forward(request, response);
+                    }
+                } else if (request.getParameter("result").equals("city")) {
+                    SearchByCityResultSet resultObj = (SearchByCityResultSet) session.getAttribute("resultObj");
+                    String sql = "INSERT INTO result (resultID,resultName,userID,`groupID`) values ('" + id + "','" + name + "'," + userID + ",'" + groupID + "');";
+                    System.out.println(sql);
+                    DbUtilities db = new DbUtilities();
+
+                    if (db.executeUpdate(sql)) {
+                        request.setAttribute("userID", userID);
+                        request.setAttribute("groupID", groupID);
+                        request.setAttribute("result", request.getParameter("result"));
+                        request.setAttribute("resultObj", resultObj);
+                        request.setAttribute("share", "Shared successfully");
+                        request.getRequestDispatcher("search.jsp").forward(request, response);
+
+                    } else {
+                        db.closeDbConnection();
+                        request.setAttribute("userID", userID);
+                        request.setAttribute("groupID", groupID);
+                        request.setAttribute("result", request.getParameter("result"));
+                        request.setAttribute("resultObj", resultObj);
+                        request.setAttribute("share", "You have already shared this result");
+                        request.getRequestDispatcher("search.jsp").forward(request, response);
+                    }
                 } else {
-                    db.closeDbConnection();
-                    request.setAttribute("userID", userID);
-                    request.setAttribute("groupID", groupID);
-                    request.setAttribute("share", "You have already shared this result");
-                    request.getRequestDispatcher("search.jsp").forward(request, response);
+                    SearchByNeighborhoodResultSet resultObj = (SearchByNeighborhoodResultSet) session.getAttribute("resultObj");
+                    String sql = "INSERT INTO result (resultID,resultName,userID,`groupID`) values ('" + id + "','" + name + "'," + userID + ",'" + groupID + "');";
+                    System.out.println(sql);
+                    DbUtilities db = new DbUtilities();
+
+                    if (db.executeUpdate(sql)) {
+                        request.setAttribute("userID", userID);
+                        request.setAttribute("groupID", groupID);
+                        request.setAttribute("result", request.getParameter("result"));
+                        request.setAttribute("resultObj", resultObj);
+                        request.setAttribute("share", "Shared successfully");
+                        request.getRequestDispatcher("search.jsp").forward(request, response);
+
+                    } else {
+                        db.closeDbConnection();
+                        request.setAttribute("userID", userID);
+                        request.setAttribute("groupID", groupID);
+                        request.setAttribute("result", request.getParameter("result"));
+                        request.setAttribute("resultObj", resultObj);
+                        request.setAttribute("share", "You have already shared this result");
+                        request.getRequestDispatcher("search.jsp").forward(request, response);
+                    }
                 }
 
             } else {
