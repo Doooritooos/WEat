@@ -88,7 +88,7 @@
                 <nav id="nav">
                     <ul>
                         <li>
-                            <a href="">Choose a Group</a>
+                            <a href="">Group</a>
                             <ul>
                                 <%
 
@@ -104,7 +104,7 @@
                                 <li><a href="#">Veroeros feugiat</a></li>
                             </ul>
                         </li>
-                        <li class="break"><a href="search.jsp?userID=<%=userID%>&groupID=<%=groupID%>">Search Restaurants</a></li>
+                        <li class="break"><a href="search.jsp?userID=<%=userID%>&groupID=<%=groupID%>">Search</a></li>
                     </ul>
                 </nav>
             </div>
