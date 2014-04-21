@@ -244,10 +244,10 @@
             <!-- Footer Wrapper -->
             <!-- Copyright -->
             <div id="copyright" class="container">
-                <ul class="menu">
-                    <li>&copy; Group Member: Jun Liu, Qianwen Li, Huan Wang.  All rights reserved.</li>
-                    <li>Design: <a href="">Everyone</a></li>
-                </ul>
+            <ul class="menu">
+                <li>&copy; Group Member: Jun Liu, Qianwen Li, Huan Wang.  All rights reserved.</li>
+                <li>Design: Everyone</li>
+            </ul>
             </div>
 
         </div>

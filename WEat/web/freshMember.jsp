@@ -39,7 +39,7 @@
                                 <h2>Every Buddy</h2>
                                 <span>See friends in the Group</span>
                             </header>
-                            <a href="http://ineedchemicalx.deviantart.com/art/Pasadena-357650036" class="image full"><img src="images/pic06.jpg" alt="" /></a>
+                            <a href="#" class="image full"><img src="images/pic06.jpg" alt="" /></a>
 
                         </article>
 

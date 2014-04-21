@@ -101,7 +101,7 @@
 
                                 </ul>
                             </div>
-                             
+
                             <div class="2u">
                                 &nbsp
                             </div>
@@ -112,7 +112,7 @@
                                 </ul>
                             </div>
                         </div>
-                   	</form>		
+                    </form>		
                 </section>
 
 
@@ -123,8 +123,8 @@
         <!-- Copyright -->
         <div id="copyright" class="container">
             <ul class="menu">
-                <li>&copy; Untitled. All rights reserved.</li>
-                <li>Design: <a href="http://html5up.net/">HTML5 UP</a></li>
+                <li>&copy; Group Member: Jun Liu, Qianwen Li, Huan Wang.  All rights reserved.</li>
+                <li>Design: Everyone</li>
             </ul>
         </div>
 

@@ -75,7 +75,7 @@
                     <ul>
 
                         
-                        <li><a href="group.jsp?userID=<%=userID%>">Back to Group</a></li>
+                        <li><a href="viewGroup.jsp?userID=<%=userID%>">Back to Group</a></li>
                         <li class="break"><a href="workspace.jsp?userID=<%=userID%>&&groupID=<%=groupID%>">Workspace</a></li>
                     </ul>
                 </nav>
@@ -264,7 +264,7 @@
         <div id="copyright" class="container">
             <ul class="menu">
                 <li>&copy; Group Member: Jun Liu, Qianwen Li, Huan Wang.  All rights reserved.</li>
-                <li>Design: <a href="http://html5up.net/">Everyone</a></li>
+                <li>Design: Everyone</li>
             </ul>
         </div>
 
