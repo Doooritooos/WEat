@@ -43,10 +43,12 @@ public class Result {
                 this.userList.put(userID, user);
                 System.out.println("[Result]userList = " + userList);         
             }
-            db.closeDbConnection();
         } catch (SQLException e) {
             System.out.println("Cannot construct Result with resultID");
             e.printStackTrace();
+        }
+         finally {
+            db.closeDbConnection();
         }
         loadCommentList();
         
@@ -93,11 +95,13 @@ public class Result {
                 commentList.add(comment);
                 System.out.println("[loadCommentList]commentList = " + commentList);
             } 
-            db.closeDbConnection();
         } catch (SQLException e) {
             System.out.println("Cannot load result comments.");
             e.printStackTrace();
+        } finally {
+            db.closeDbConnection();
         }
+        
     }
     
     public Hashtable<Integer, User> getUserList()

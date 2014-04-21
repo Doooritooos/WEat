@@ -1,15 +1,63 @@
 <%-- 
-    Document   : workspaceUI.jsp
-    Created on : 2014-4-20, 16:42:24
+    Document   : workspaceTest
+    Created on : 2014-4-11, 17:59:06
     Author     : Liu
 --%>
-
+<%@page import="java.util.Collections"%>
+<%@page import="java.util.Comparator"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="edu.pitt.utilities.*"%>
+<%@page import="edu.pitt.domain.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+
+    Workspace myWorkspace;
+    int userID = 0;
+    User user = null;
+    Group group = null;
+    String groupID = null;
+
+    userID = 2;
+    groupID = "4795d862-23ca-42bc-88b0-59ff65dad359";
+//    groupID = "d9cb3258-df24-4eaa-ad51-e73c23765872";
+
+    //check if user is valid
+//    if (request.getParameter("userID") == null) {
+//        response.sendRedirect("login.jsp?error=Invalid user!");
+//    } else {
+//        userID = Integer.parseInt((String) request.getParameter("userID"));
+//        user = new User(userID);
+//        if (user.isValid() == false) {
+//            response.sendRedirect("login.jsp?error=Invalid user!");
+//        }
+//    }
+//    groupID = (String) request.getParameter("groupID");
+    group = new Group(userID, groupID);
+    myWorkspace = new Workspace(userID, groupID);
+
+    //   if (myWorkspace.getReultList().size() != 0) {
+    //if Button addComment  is clicked
+    if (request.getParameter("btnAddComment") != null && request.getParameter("txtComment") != null && request.getParameter("selectedResultID") != null) {
+        String txtComment = request.getParameter("txtComment");
+        String selectedResultID = request.getParameter("selectedResultID");
+        System.out.println("*_*_*_*_*_*_*_*selectedResultID = " + selectedResultID + "txtComment = " + txtComment);
+        //insert the new commnet into database WEat.Comment
+        Comment newComment = new Comment(selectedResultID, userID, groupID, txtComment);
+        //update the commentList of the result by reloading from databse table  WEat.Comment 
+        Result updateResult = new Result(selectedResultID, groupID);
+        myWorkspace.getReultList().put(selectedResultID, updateResult);
+    }
+%>
+
 <!DOCTYPE html>
+
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>No Sidebar - Telephasic by HTML5 UP</title>
+        <meta http-equiv="Content-Type" cNo Sidebar - Telephasic by HTML5 UPontent="text/html; charset=UTF-8">
+              <title>Workspace Page</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/signin.css" rel="stylesheet">
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="description" content="" />
         <meta name="keywords" content="" />
@@ -25,6 +73,7 @@
         <link rel="stylesheet" href="css/style-n1.css" />
         </noscript>
     </head>
+
     <body class="no-sidebar">
 
         <!-- Header Wrapper -->
@@ -34,14 +83,22 @@
             <div id="header" class="container">
 
                 <!-- Logo -->
-                <h1 id="logo"><a href="index.html">Telephasic</a></h1>
+                <h1 id="logo"><a href="#"><%=group.getGroupName()%> Workspace</a></h1>
 
                 <!-- Nav -->
                 <nav id="nav">
                     <ul>
                         <li>
-                            <a href="">Dropdown</a>
+                            <a href="">Choose a Group</a>
                             <ul>
+                                <%
+   //                             ArrayList<Group> groupList = group.getGroupList();
+ //                               ArrayList<Group> groupList = group.getGroupList();
+ //                               for(Group g : groupList)
+  //                              {
+  //                                  out.println("<li><a href=workspace.jsp?userID='" + userID +"&groupID=" + g.getGroupName() +"'>" + g.getGroupName() + "</a></li>");
+     //                           }
+                                %>
                                 <li><a href="#">Lorem ipsum dolor</a></li>
                                 <li><a href="#">Magna phasellus</a></li>
                                 <li><a href="#">Etiam dolore nisl</a></li>
@@ -57,14 +114,10 @@
                                 <li><a href="#">Veroeros feugiat</a></li>
                             </ul>
                         </li>
-                        <li><a href="left-sidebar.html">Left Sidebar</a></li>
-                        <li class="break"><a href="right-sidebar.html">Right Sidebar</a></li>
-                        <li><a href="no-sidebar.html">No Sidebar</a></li>
+                        <li class="break"><a href="search.jsp?userID=<%=userID%>&groupID=<%=groupID%>">Search Restaurants</a></li>
                     </ul>
                 </nav>
-
             </div>
-
         </div>
 
         <!-- Main Wrapper -->
@@ -77,73 +130,69 @@
                         <!-- Content -->
                         <article id="content">
                             <header>
-                                <h2>No Sidebar</h2>
-                                <span>Lorem ipsum dolor sit amet consectetur et sed adipiscing elit
-                                    dolor neque semper.</span>
-                            </header>
-                            <a href="http://ineedchemicalx.deviantart.com/art/Pasadena-357650036" class="image full"><img src="images/pic06.jpg" alt="" /></a>
-                            <p>Ut sed tortor luctus, gravida nibh eget, volutpat odio. Proin rhoncus, sapien 
-                                mollis luctus hendrerit, orci dui viverra metus, et cursus nulla mi sed elit. Vestibulum 
-                                condimentum, mauris a mattis vestibulum, urna mauris cursus lorem, eu fringilla lacus 
-                                ante non est. Nullam vitae feugiat libero, eu consequat sem. Proin tincidunt neque 
-                                eros. Duis faucibus blandit ligula, mollis commodo risus sodales at. Sed rutrum et 
-                                turpis vel blandit. Nullam ornare congue massa, at commodo nunc venenatis varius. 
-                                Praesent mollis nisi at vestibulum aliquet. Sed sagittis congue urna ac consectetur.</p>
-                            <p>Mauris eleifend eleifend felis aliquet ornare. Vestibulum porta velit at elementum
-                                gravida nibh eget, volutpat odio. Proin rhoncus, sapien 
-                                mollis luctus hendrerit, orci dui viverra metus, et cursus nulla mi sed elit. Vestibulum 
-                                condimentum, mauris a mattis vestibulum, urna mauris cursus lorem, eu fringilla lacus 
-                                ante non est. Nullam vitae feugiat libero, eu consequat sem. Proin tincidunt neque 
-                                eros. Duis faucibus blandit ligula, mollis commodo risus sodales at. Sed rutrum et 
-                                turpis vel blandit. Nullam ornare congue massa, at commodo nunc venenatis varius. 
-                                Praesent mollis nisi at vestibulum aliquet. Sed sagittis congue urna ac consectetur.</p>
-                            <p>Vestibulum pellentesque posuere lorem non aliquam. Mauris eleifend eleifend 
-                                felis aliquet ornare. Vestibulum porta velit at elementum elementum.</p>
-                        </article>
+                                <!--<h2>Workspace of <%=group.getGroupName()%></h2>-->
+                                <span>
+                                    <%
+                                        out.println("My workspace: userID = " + myWorkspace.getUserID() + ", groupID = " + myWorkspace.getGroupID() + ", resultList = " + myWorkspace.getReultList() + "<br><br>");
+                                    %>
+                                </span>
+                                                   
+                            <%            //sort resultList based on the number of user likes
+                                //more users like a result, the higher a result ranks
+                                ArrayList<Result> results = new ArrayList(myWorkspace.getReultList().values());
 
+                                class resultComparator implements Comparator<Result> {
+
+                                    @Override
+                                    public int compare(Result a, Result b) {
+                                        return a.getUserList().size() > b.getUserList().size() ? -1 : a.getUserList().size() == b.getUserList().size() ? 0 : 1;
+                                    }
+                                }
+
+                                Collections.sort(results, new resultComparator());
+
+                                for (int i = 0; i < results.size(); i++) {
+                                    String resultID = results.get(i).getResultID();
+                            %>           
+                            <div class="row features">
+                                <section class="2u feature">&nbsp;</section>
+                                <section class="8u feature">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <header><h2><a href='http://www.yelp.com/biz/<%=results.get(i).getResultID()%>'><%=results.get(i).getResultName()%></a></h2></header>
+                                        </div>
+                                        <!--<p>liked by <%=results.get(i).userListToString()%> </p>-->
+                                        <span>liked by <%=results.get(i).userListToString()%></span>
+                                        <div class="panel-body">
+
+                                            <p><%=results.get(i).commenListToString()%></p>
+
+                                            <form id="formComment" name= "formComment" method="post" action="workspace.jsp">
+                                                <ul class="actions">
+                                                    <li><input type="text" class="text" name="txtComment" id="txtComment"  placeholder="Add comment..." required autofocus value=""/></li>
+                                                    <li><button type="submit" class="button" name="btnAddComment" id="btnAddComment" value = "Add">
+                                                            <span class="glyphicon glyphicon-plus"></span>
+                                                        </button><li>
+                                                </ul>  
+
+                                                <input type="hidden" name="selectedResultID" id="selectedResultID" value="<%=resultID%>">
+                                                <input type="hidden" name="userID" value="<%=userID%>">
+                                                <input type="hidden" name="groupID" value="<%=groupID%>">
+                                            </form>
+                                        </div>
+                                </section>
+                                <section class="2u feature">&nbsp;</section>
+                            </div>
+
+                            <%                    }//end of for
+%>
+
+
+                        </header> 
+                        </article>
                     </div>
                 </div>
-                <div class="row features">
-                    <section class="4u feature">
-                        <div class="image-wrapper first">
-                            <a href="http://ineedchemicalx.deviantart.com/art/Time-goes-by-too-fast-335982438" class="image full"><img src="images/pic03.jpg" alt="" /></a>
-                        </div>
-                        <header>
-                            <h3>Dolor sit consequat magna</h3>
-                        </header>
-                        <p>Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur 
-                            vel sem sit dolor neque semper magna lorem ipsum.</p>
-                        <ul class="actions">
-                            <li><a href="#" class="button">Elevate my awareness</a></li>
-                        </ul>
-                    </section>
-                    <section class="4u feature">
-                        <div class="image-wrapper">
-                            <a href="http://ineedchemicalx.deviantart.com/art/Kingdom-of-the-Wind-348268044" class="image full"><img src="images/pic04.jpg" alt="" /></a>
-                        </div>
-                        <header>
-                            <h3>Dolor sit consequat magna</h3>
-                        </header>
-                        <p>Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur 
-                            vel sem sit dolor neque semper magna lorem ipsum.</p>
-                        <ul class="actions">
-                            <li><a href="#" class="button">Elevate my awareness</a></li>
-                        </ul>
-                    </section>
-                    <section class="4u feature">
-                        <div class="image-wrapper">
-                            <a href="http://ineedchemicalx.deviantart.com/art/Elysium-355393900" class="image full"><img src="images/pic05.jpg" alt="" /></a>
-                        </div>
-                        <header>
-                            <h3>Dolor sit consequat magna</h3>
-                        </header>
-                        <p>Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur 
-                            vel sem sit dolor neque semper magna lorem ipsum.</p>
-                        <ul class="actions">
-                            <li><a href="#" class="button">Elevate my awareness</a></li>
-                        </ul>
-                    </section>
-                </div>
+
             </div>
         </div>
 
@@ -153,51 +202,11 @@
             <!-- Footer -->
             <div id="footer" class="container">
                 <header class="major">
-                    <h2>Euismod aliquam vehicula lorem</h2>
-                    <span>Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur vel sem sit<br />
-                        dolor neque semper magna lorem ipsum feugiat veroeros lorem ipsum dolore.</span>
+                    <h2>WEat</h2>
+                    <span>Collaborative Workspace<br />
+                         Group <%=group.getGroupName()%></span>
                 </header>
-                <div class="row">
-                    <section class="6u">
-                        <form method="post" action="#">
-                            <div class="row half">
-                                <div class="6u">
-                                    <input name="name" placeholder="Name" type="text" class="text" />
-                                </div>
-                                <div class="6u">
-                                    <input name="email" placeholder="Email" type="text" class="text" />
-                                </div>
-                            </div>
-                            <div class="row half">
-                                <div class="12u">
-                                    <textarea name="message" placeholder="Message"></textarea>
-                                </div>
-                            </div>
-                            <div class="row half">
-                                <div class="12u">
-                                    <ul class="actions">
-                                        <li><a href="#" class="button">Send Message</a></li>
-                                        <li><a href="#" class="button">Clear Form</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </form>
-                    </section>
-                    <section class="6u">
-                        <div class="row no-collapse-1">
-                            <ul class="divided icons 6u">
-                                <li class="fa fa-twitter"><a href="#"><span class="extra">twitter.com/</span>untitled</a></li>
-                                <li class="fa fa-facebook"><a href="#"><span class="extra">facebook.com/</span>untitled</a></li>
-                                <li class="fa fa-dribbble"><a href="#"><span class="extra">dribbble.com/</span>untitled</a></li>
-                            </ul>
-                            <ul class="divided icons 6u">
-                                <li class="fa fa-linkedin"><a href="#"><span class="extra">linkedin.com/</span>untitled</a></li>
-                                <li class="fa fa-youtube"><a href="#"><span class="extra">youtube.com/</span>untitled</a></li>
-                                <li class="fa fa-pinterest"><a href="#"><span class="extra">pinterest.com/</span>untitled</a></li>
-                            </ul>
-                        </div>
-                    </section>
-                </div>
+
             </div>
 
             <!-- Copyright -->

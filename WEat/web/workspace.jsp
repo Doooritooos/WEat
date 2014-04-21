@@ -8,7 +8,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="edu.pitt.utilities.*"%>
 <%@page import="edu.pitt.domain.*"%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -107,7 +106,7 @@
           </div>
 
             <%
-                }
+                }//end of for
             }else
     {
         %>
@@ -115,10 +114,8 @@
         This group have not share anything yet.
         
         <%
-    }
+    }//end of else
             %> 
-
-
             <form name="search" action="search.jsp">   
                 <input type="hidden" name="userID" value="<%=userID%>">
                 <input type="hidden" name="groupID" value="<%=groupID%>">

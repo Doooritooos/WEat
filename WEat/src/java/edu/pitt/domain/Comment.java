@@ -36,10 +36,12 @@ public class Comment {
                 this.groupID = rs.getString("groupID");
                 this.commentText = rs.getString("commentText");
             }
-            db.closeDbConnection();
         } catch (SQLException e) {
             System.out.println("Cannot construct Comment with commentID");
             e.printStackTrace();
+        }
+         finally {
+            db.closeDbConnection();
         }
     }
 
