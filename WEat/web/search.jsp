@@ -75,7 +75,7 @@
                     <ul>
 
                         
-                        <li><a href="viewGroup.jsp?userID=<%=userID%>">Back to Group</a></li>
+                        <li><a href="viewGroup.jsp?userID=<%=userID%>">Group</a></li>
                         <li class="break"><a href="workspace.jsp?userID=<%=userID%>&&groupID=<%=groupID%>">Workspace</a></li>
                     </ul>
                 </nav>
