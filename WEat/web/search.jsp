@@ -77,6 +77,11 @@
                         
                         <li><a href="viewGroup.jsp?userID=<%=userID%>">Back to Group</a></li>
                         <li class="break"><a href="workspace.jsp?userID=<%=userID%>&&groupID=<%=groupID%>">Workspace</a></li>
+<!--                        <li>
+                            <form action="logoutServlet" method="POST" target="_top">
+                                <button class="button" type="submit" >Log out</button>
+                            </form>
+                        </li>-->
                     </ul>
                 </nav>
 

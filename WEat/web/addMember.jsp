@@ -75,7 +75,8 @@
                     <form name="form" action="AddMember" method ="POST" onsubmit="javascript:return validate();">
                         <div class="row half">
                             <input type="hidden" name="groupID" value="<%=curGroup.getGroupID()%>"/>
-                            <input type="hidden" name="curUserID" value="<%=userID%>"/>
+                            <input type="hidden" name="groupName" value="<%=curGroup.getGroupName()%>"/>
+                            <input type="hidden" name="userID" value="<%=userID%>"/>
                             <div class="6u"><input type="email" class="text" name="newEmail" placeholder="New Member's email" required /></div>
                             <div class="6u"><input type="text" class="text" name="newUserID" placeholder="New Member's userID" required /></div>
                         </div>

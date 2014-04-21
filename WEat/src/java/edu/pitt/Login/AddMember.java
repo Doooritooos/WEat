@@ -53,7 +53,7 @@ public class AddMember extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
                 response.setContentType("text/html;charset-UTF-8");
                 PrintWriter out= response.getWriter();
-                int curUserID = Integer.parseInt(request.getParameter("curUserID"));
+                int userID = Integer.parseInt(request.getParameter("userID"));
 //                String newEmail=request.getParameter("newEmail");
 		String groupID =request.getParameter("groupID");
                 String groupName=request.getParameter("groupName");
@@ -61,16 +61,20 @@ public class AddMember extends HttpServlet {
                         
                         Group newGroup = new Group(groupID, newUserID, groupName);
                         
-                        User curUser=new User(curUserID);
+//                        User curUser=new User(userID);
                         
 			try{
                              if(newGroup!=null){ 
                                 
                                 System.out.println("You are successfully add the member");
                                 out.println("<script language = javascript> alert('You have succeessfully add the member'); </script>");
-                                HttpSession session = request.getSession(true);
-                                session.setAttribute("currentSessionUser", curUser);
-                                response.sendRedirect("freshMember.jsp");
+//                                HttpSession session = request.getSession(true);
+//                                session.setAttri("currentSessionUser", curUser);
+                                HttpServletRequest httpRequest = (HttpServletRequest) request;
+        
+                                httpRequest.getRequestDispatcher("memberList.jsp?userID&groupID").forward(request,response);  
+                                
+//                                response.sendRedirect("memberList.jsp");
                                
                              }else{
                                 System.out.println("Error added!");
