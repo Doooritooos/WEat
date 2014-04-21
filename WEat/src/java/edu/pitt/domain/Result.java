@@ -141,6 +141,11 @@ public class Result {
         return new String(s);
     }
     
+    public ArrayList<Comment> getCommentList()
+    {
+        return this.commentList;
+    }
+    
     public String commenListToString()
     {
         StringBuffer s = new StringBuffer();
