@@ -117,8 +117,8 @@
                         <!-- Content -->
                         <article id="content">
                             <header class="major">
-                                <h2><%=curGroup.getGroupName()%> Workspace</h2>
-                                <span >Sharing and interacing  with friends.
+                                <h2><a href="workspace.jsp?userID=<%=userID%>&groupID=<%=groupID%>"><%=curGroup.getGroupName()%></a> Workspace</h2>
+                                <span >Sharing and interacting  with friends.
                                     <%
    //                                     out.println("My workspace: userID = " + myWorkspace.getUserID() + ", groupID = " + myWorkspace.getGroupID() + ", resultList = " + myWorkspace.getReultList() + "<br><br>");
                                     %>
@@ -246,7 +246,7 @@
             <div id="copyright" class="container">
                 <ul class="menu">
                     <li>&copy; Group Member: Jun Liu, Qianwen Li, Huan Wang.  All rights reserved.</li>
-                    <li>Design: <a href="http://html5up.net/">Everyone</a></li>
+                    <li>Design: <a href="">Everyone</a></li>
                 </ul>
             </div>
 
