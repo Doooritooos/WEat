@@ -64,7 +64,7 @@ public class LoginServlet extends HttpServlet {
             if (backUser.isValid()) {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("currentSessionUser", backUser);
-                response.sendRedirect("group.jsp");
+                response.sendRedirect("viewGroup.jsp");
 
 
 //                RequestDispatcher rd = request.getRequestDispatcher("group.jsp");

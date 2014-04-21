@@ -54,12 +54,10 @@ public class AddMember extends HttpServlet {
                 response.setContentType("text/html;charset-UTF-8");
                 PrintWriter out= response.getWriter();
                 int curUserID = Integer.parseInt(request.getParameter("curUserID"));
-                String newEmail=request.getParameter("newEmail");
+//                String newEmail=request.getParameter("newEmail");
 		String groupID =request.getParameter("groupID");
                 String groupName=request.getParameter("groupName");
-                User newMember = new User(newEmail);
-                       
-                        int newUserID = newMember.getUserID();
+                int newUserID = Integer.parseInt(request.getParameter("newUserID"));
                         
                         Group newGroup = new Group(groupID, newUserID, groupName);
                         
@@ -72,7 +70,7 @@ public class AddMember extends HttpServlet {
                                 out.println("<script language = javascript> alert('You have succeessfully add the member'); </script>");
                                 HttpSession session = request.getSession(true);
                                 session.setAttribute("currentSessionUser", curUser);
-                                response.sendRedirect("group.jsp");
+                                response.sendRedirect("freshMember.jsp");
                                
                              }else{
                                 System.out.println("Error added!");

@@ -12,137 +12,154 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Group</title>
+        <title>Group List</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600" rel="stylesheet" type="text/css" />
+        <!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.dropotron.min.js"></script>
+        <script src="js/skel.min.js"></script>
+        <script src="js/skel-panels.min.js"></script>
+        <script src="js/init.js"></script>
 
+        <noscript>
+        <link rel="stylesheet" href="css/skel-noscript.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/style-n1.css" />
+        <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
-
+        <!-- Bootstrap theme -->
         <link href="css/bootstrap-theme.min.css" rel="stylesheet">
 
+        <!-- Custom styles for this template -->
         <link href="css/theme.css" rel="stylesheet">
-        
-        <script type="text/javascript">  
-        function search() {  
-            document.getElementById("form1").action="search.jsp";
-            document.getElementById("form1").submit();  
-        }  
-        function addMember() {  
-            document.getElementById("form1").action="addMember.jsp";
-            document.getElementById("form1").submit(); 
-//            form1.submit; 
-        }  
-        
-        function memberList() {  
-            document.getElementById("form1").action="memberList.jsp";
-            document.getElementById("form1").submit(); 
-//            form1.submit; 
-        }  
-        
-        </script>  
-        
-        
+        </noscript>
     </head>
-    
 
-    <body role="document">
-        <div class="container theme-showcase" role="main">
 
-            <div>
-                <a href="addGroup.jsp" class="btn btn-lg btn-primary btn-block active" role="button">Add Group</a>
-            </div>
-            
+    <body class="no-sidebar">
 
-            
-            <!-- <div class="row"> -->
-            <div class="col-sm-4" align="center">
-                <ul class="list-group">
-                    <% 
-                      if(session.getAttribute("currentSessionUser")!=null){
-                        User currentUser = ((User) (session.getAttribute("currentSessionUser")));
-                        session.setAttribute("currentSessionUser", currentUser);
-                        int currentUserID = currentUser.getUserID();
-                        User curUser = new User(currentUserID);
-                        String curUserName = curUser.getUserName();
-                        Group existGroup =  new Group(currentUserID);
 
-                        ArrayList<Group> groupList = existGroup.getGroupList();
-                    %>
-                    
-                    <div class="page-header">
-                        <h1><%=curUserName%>,<small>&nbsp Your Groups</small></h1>
-                        
+        <div class="wrapper">
+            <div class="container">
+                <div class="row" id="main">
+                    <div class="12u">
+
+                        <!-- Content -->
+                        <article id="content">
+                            <header>
+                                <%
+                                    if (session.getAttribute("currentSessionUser") != null) {
+                                        User currentUser = ((User) (session.getAttribute("currentSessionUser")));
+                                        session.setAttribute("currentSessionUser", currentUser);
+                                        int currentUserID = currentUser.getUserID();
+                                        User curUser = new User(currentUserID);
+                                        String curUserName = curUser.getUserName();
+                                        Group existGroup = new Group(currentUserID);
+
+                                        ArrayList<Group> groupList = existGroup.getGroupList();
+                                %>
+                                <span>Your Group List</span>
+                                <div class="row">
+                                    <div class="3u">
+                                        <h2>Hello, <%=curUserName%> (User ID:<%=currentUserID%>)</h2>
+                                    </div>
+                                    <div class="6u">
+                                        <a href="addGroup.jsp" class="button" type="submit" target="body">Group + +</a>
+                                    </div>
+                                </div>
+                            </header>
+
+
+                            <section class="12u">
+                                <div class="row no-collapse-1">
+                                    <!--			<ul class="divided icons 6u">
+                                                                <li class="fa fa-twitter"><a href="#"><span class="extra">twitter.com/</span>untitled</a></li>
+                                                                <li class="fa fa-facebook"><a href="#"><span class="extra">facebook.com/</span>untitled</a></li>
+                                                                <li class="fa fa-dribbble"><a href="#"><span class="extra">dribbble.com/</span>untitled</a></li>
+                                    -->
+
+
+
+
+                                    <%
+                                        if (groupList.size() > 0) {
+                                            for (int i = 0; i < groupList.size(); i++) {
+                                                Group g = groupList.get(i);
+
+                                    %>
+
+
+                                    <ul class="divided icons 12u">
+
+                                        <li class="fa fa-dribbble"><%=g.getGroupName()%></li>
+
+
+                                        <form class="form-login" action="search.jsp" method ="POST" target="_top"> 
+                                            <input type="hidden" name="groupID" value="<%=g.getGroupID()%>"/>    
+                                            <input type="hidden" name="userID" value="<%=currentUserID%>"/>
+
+                                            <input class="button" type="submit" value="Search">
+                                        </form>
+
+
+                                        <form class="form-login" action="memberList.jsp" method ="POST" target="body"> 
+                                            <input type="hidden" name="groupID" value="<%=g.getGroupID()%>"/>    
+                                            <input type="hidden" name="userID" value="<%=currentUserID%>"/>
+                                            <input class="button" type="submit" value="Group Member">
+                                        </form>
+                                        <br>
+                                        <hr> 
+                                        <br>
+
+                                        <%
+
+                                            }
+
+                                        %>
+                                    </ul>
+
+                                </div>
+                                <%                    } else {
+                                %>
+
+
+                                <span>There's no group yet, please add a group</span>
+
+                                <%
+                                        }
+                                    }
+
+
+                                %>
+                            </section>
+
+                        </article>
+
                     </div>
-                   
-                    <%   
-                        if (groupList.size() > 0) {
-                            for (int i = 0; i < groupList.size(); i++) {
-                                Group g = groupList.get(i);
-                                System.out.println(g.getGroupName());
-                    %>
+                </div>
 
-                    <br>
-                    
-                        
-                        <li class="list-group-item"><%=g.getGroupName()%></li>
-                       
-                        <form class="form-login" action="search.jsp" method ="POST"> 
-                        <input type="hidden" name="groupID" value="<%=g.getGroupID()%>"/>    
-                        <input type="hidden" name="userID" value="<%=currentUserID%>"/>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
-                        </form>
-                        
-                        <form class="form-login" action="addMember.jsp" method ="POST"> 
-                        <input type="hidden" name="groupID" value="<%=g.getGroupID()%>"/>    
-                        <input type="hidden" name="userID" value="<%=currentUserID%>"/>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Add Member</button>
-                        </form>
-                        
-                        <form class="form-login" action="memberList.jsp" method ="POST"> 
-                        <input type="hidden" name="groupID" value="<%=g.getGroupID()%>"/>    
-                        <input type="hidden" name="userID" value="<%=currentUserID%>"/>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Member List</button>
-                        </form>
-                        
-                        
-                      
-                        
-<!--                        <input class="btn btn-lg btn-primary btn-block" name="bt1" type="button" value="Search" onclick="search()"/>
-                        <input class="btn btn-lg btn-primary btn-block" name="bt2" type="button" value="Add Member" onclick="addMember()" />
-                        <input class="btn btn-lg btn-primary btn-block" name="bt3" type="button" value="Member List" onclick="memberList()" />
-                        </form>-->
-                    
-                    <%
-                       System.out.println(g.getGroupName());
-                            }
-                    } else {
-                    %>
-                   
-               
-                     <span class="label label-primary">There's no group yet,please add a group</span>
-                    
-                    <%
-                        }
-                      }
-                        
-                    
-                    %>
-                    
-
-                </ul>
             </div>
-                    
-            
+                <div id="footer-wrapper" >
+
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+
+
+            </div>
         </div>
+<!--        <div id="footer-wrapper">
+          
+        </div>-->
 
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/docs.min.js"></script>
-        
-        
     </body>
 </html>

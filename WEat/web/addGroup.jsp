@@ -8,41 +8,93 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add Group</title>
-        <link href="css/bootstrap.css" rel="stylesheet">
-        <link href="css/signin.css" rel="stylesheet">
+        <title>Home</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600" rel="stylesheet" type="text/css" />
+        <!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.dropotron.min.js"></script>
+        <script src="js/skel.min.js"></script>
+        <script src="js/skel-panels.min.js"></script>
+        <script src="js/init.js"></script>
+        <noscript>
+        <link rel="stylesheet" href="css/skel-noscript.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/style-n1.css" />
+        </noscript>
+
+        <script>
+            function validate() {
+                var groupname = document.form.groupname.value;
+
+                if (groupname == "") {
+                    alert("Please Enter Group's Name!");
+                    return false;
+                }
+
+                return true;
+            }
+        </script>
     </head>
-    <body>
-        <div class="container">
+    <body class="homepage">
 
-                <div class="header">
-                <center>
-                <h3 class="text-muted">WEat</h3>
-                </center>
-                </div>
-            
-            <div>
-		<form class="form-login" action="AddGroup" method ="POST">
 
-                    <center>
-                    <h2 class="form-login-heading">Add Group</h2>
-                    </center>
-                    <% User currentUser = ((User) (session.getAttribute("currentSessionUser")));%>
-                    <input type="text" name="userName" class="form-control" value="<%=currentUser.getUserName()%>">
-                    <input type="hidden" name="userID" value="<%=currentUser.getUserID()%>"/>
-                    <input type="text" name="groupname" class="form-control" placeholder="Group Name" required autofocus>
-                     
-<!--                    <input type="text" name="userID" class="form-control" placeholder="userID" required autofocus>-->
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">Submit</button>
-                    <a href="group.jsp" class="btn btn-lg btn-primary btn-block active" role="button">Cancel</a>
-		</form>
+        <section id="addGroup">
+            <div id="footer-wrapper">
+                <div id="footer" class="container">
+                    <header class="major">
+                        <h2>Add New Group</h2>
+                        <!--                        <span>Add New Buddy</span>-->
+                    </header>
+                    <div class="row">
+
+                        <section class="12u">
+
+                            <form name="form" action="AddGroup" method ="POST" onsubmit="javascript:return validate();" target="left">
+                                <% User currentUser = ((User) (session.getAttribute("currentSessionUser")));%>
+                                <div class="row half">
+
+                                    <input type="hidden" name="userName" value="<%=currentUser.getUserName()%>">
+                                    <input type="hidden" name="userID" value="<%=currentUser.getUserID()%>"/>
+                                    <div class="12u">
+                                        <input type="text" class="text" name="groupname" placeholder="Group Name" required />
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="row half">
+                                    <div class="5u">
+                                        &nbsp
+                                    </div>
+                                    <div class="5u">
+
+                                        <input type="submit" class="button" value="Add">
+
+                                    </div>
+                                    <div class="2u">
+                                        &nbsp
+                                    </div>
+
+                                </div>
+
+                            </form>				
+                        </section>
+
+
+
+                    </div>
                 </div>
-                
+
             </div>
-        
-        
+        </section>
+
+
+
+
     </body>
-    
-    <script src="js/transition.js" type="text/javascript"></script>
+
 </html>
