@@ -20,9 +20,8 @@ public class Workspace {
     private int userID;
     private String groupID;
     private Hashtable<String, Result> resultList = new Hashtable<String, Result>();
-    
-    public Workspace(int userID, String groupID)
-    {
+
+    public Workspace(int userID, String groupID) {
         this.userID = userID;
         this.groupID = groupID;
         loadGroupResults();
@@ -31,11 +30,12 @@ public class Workspace {
     /**
      * retrieve all results into the resutlList, of which group the
      * authenticatedUser is in
+     *
      * @param groupID
      */
     public void loadGroupResults() {
         String sql = "SELECT * FROM  WEat.Result ";
-        sql += " WHERE `groupID` = '" +  this.groupID + "' ;";
+        sql += " WHERE `groupID` = '" + this.groupID + "' ;";
         System.out.println("[loadGroupResults]sql = " + sql);
         DbUtilities db = new DbUtilities();
         try {
@@ -46,39 +46,35 @@ public class Workspace {
                 Result result = new Result(resultID, groupID);
                 // Add each account to customerList
                 resultList.put(resultID, result);
-                 System.out.println("[loadGroupResults]resultList = " + resultList);
+                System.out.println("[loadGroupResults]resultList = " + resultList);
             }
-            db.closeDbConnection();
         } catch (SQLException e) {
             System.out.println("Cannot load group results.");
             e.printStackTrace();
+        } finally {
+            db.closeDbConnection();
         }
     }//end of loadGroupResults
-    
-    public Hashtable<String, Result> getReultList()
-    {
+
+    public Hashtable<String, Result> getReultList() {
         return this.resultList;
     }
-    
-    public String[] getResultIDList()
-    {
+
+    public String[] getResultIDList() {
         String[] resultIDList = new String[this.resultList.size()];
-       Enumeration<String> resultsID = resultList.keys();
-       int i = 0;
-       while(resultsID.hasMoreElements())
-       {
-           resultIDList[i++] = resultsID.nextElement();
-       }        
+        Enumeration<String> resultsID = resultList.keys();
+        int i = 0;
+        while (resultsID.hasMoreElements()) {
+            resultIDList[i++] = resultsID.nextElement();
+        }
         return resultIDList;
     }
-    
-    public String getGroupID()
-    {
+
+    public String getGroupID() {
         return this.groupID;
     }
-    
-      public int getUserID()
-    {
+
+    public int getUserID() {
         return this.userID;
     }
 }
