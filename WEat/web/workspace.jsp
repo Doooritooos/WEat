@@ -89,7 +89,7 @@
                 <nav id="nav">
                     <ul>
                         <li>
-                            <a href="">Choose a Group</a>
+                            <a href="viewGroup.jsp?userID=<%=userID%>&groupID=<%=groupID%>">Choose a Group</a>
                             <ul>
                                 <%
                                     for (Group g : groupList) {
@@ -101,7 +101,7 @@
                                     %>
                             </ul>
                         </li>
-                        <li class="break"><a href="search.jsp?userID=<%=userID%>&groupID=<%=groupID%>">Search Restaurants</a></li>
+                        <li class="break"><a href="search.jsp?userID=<%=userID%>&groupID=<%=groupID%>">Search</a></li>
                     </ul>
                 </nav>
             </div>
